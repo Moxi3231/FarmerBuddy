@@ -4,77 +4,104 @@
  * and open the template in the editor.
  */
 package fb_classes;
+
 import javax.persistence.*;
+
 /**
  *
  * @author moxan
  */
 @Entity
-public class Answer {
+public class Answer
+{
+
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public int AID;
     //public int QID;
-    
-    @ManyToOne(cascade = CascadeType.ALL)
+
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinColumn(name = "question_id")
     public Question question;
-    
+
     public String Answer;
-    public int UID;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    public User user;
+
+    //public int UID;
     public boolean isValidated;
 
-    public Answer(int AID, Question QID, String Answer, int UID, boolean isValidated) {
+    public User getUser()
+    {
+        return user;
+    }
+
+    public void setUser(User user)
+    {
+        this.user = user;
+    }
+
+    public Answer(int AID, Question QID, String Answer, boolean isValidated)
+    {
         this.AID = AID;
         this.question = QID;
         this.Answer = Answer;
-        this.UID = UID;
+        //this.UID = UID;
         this.isValidated = isValidated;
     }
 
-    public Question getQuestion() {
+    public Answer()
+    {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Question getQuestion()
+    {
         return question;
     }
 
-    public void setQuestion(Question question) {
+    public void setQuestion(Question question)
+    {
         this.question = question;
     }
 
-    public int getAID() {
+    public int getAID()
+    {
         return AID;
     }
 
-    public void setAID(int AID) {
+    public void setAID(int AID)
+    {
         this.AID = AID;
+    }
+
+    public String getAnswer()
+    {
+        return Answer;
+    }
+
+    public void setAnswer(String Answer)
+    {
+        this.Answer = Answer;
     }
 
     
 
-    public String getAnswer() {
-        return Answer;
-    }
-
-    public void setAnswer(String Answer) {
-        this.Answer = Answer;
-    }
-
-    public int getUID() {
-        return UID;
-    }
-
-    public void setUID(int UID) {
-        this.UID = UID;
-    }
-
-    public boolean isIsValidated() {
+    public boolean isIsValidated()
+    {
         return isValidated;
     }
 
-    public void setIsValidated(boolean isValidated) {
+    public void setIsValidated(boolean isValidated)
+    {
         this.isValidated = isValidated;
     }
 
     @Override
-    public String toString() {
-        return "Answer{" + "AID=" + AID + ", Question=" + question + ", Answer=" + Answer + ", UID=" + UID + ", isValidated=" + isValidated + '}';
+    public String toString()
+    {
+        return "Answer{" + "AID=" + AID + ", Question=" + question + ", Answer=" + Answer + ", User=" + user + ", isValidated=" + isValidated + '}';
     }
-    
+
 }

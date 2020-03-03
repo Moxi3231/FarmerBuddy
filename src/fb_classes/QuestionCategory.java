@@ -15,6 +15,7 @@ import javax.persistence.*;
 @Entity
 public class QuestionCategory {
     @Id
+     @GeneratedValue(strategy = GenerationType.AUTO)
     public int QCID;
     
     @ManyToMany(cascade = CascadeType.ALL)

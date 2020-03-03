@@ -8,6 +8,9 @@ package fb_classes;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,6 +26,7 @@ import org.hibernate.*;
 public class Question {
 
     @Id
+     @GeneratedValue(strategy = GenerationType.AUTO)
     public int Q_Id;
     //public int UID;
     @ManyToOne(cascade = CascadeType.ALL)
@@ -33,8 +37,18 @@ public class Question {
     @OneToOne(cascade = CascadeType.ALL)
     public QuestionCategory qc;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "question")
     public List<Answer> answers;
+
+    public List<Answer> getAnswers()
+    {
+        return answers;
+    }
+
+    public void setAnswers(List<Answer> answers)
+    {
+        this.answers = answers;
+    }
     
     public User getUser() {
         return user;

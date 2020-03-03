@@ -7,10 +7,12 @@ package farmerbuddy;
 
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.JFXTreeTableView;
+import fb_classes.Answer;
 import fb_classes.Question;
 import fb_classes.User;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -29,13 +31,15 @@ import org.hibernate.Transaction;
  *
  * @author moxan
  */
-public class ForumManageController implements Initializable {
+public class ForumManageController implements Initializable
+{
 
     //@FXML
     //private JFXTreeTableView<?> rootTable;
     /**
      * Initializes the controller class.
      */
+    //private boolean tFlag =true;
     private Global gb = Global.getGlobal();
     private DBContext dbCon = DBContext.getDbContext();
     @FXML
@@ -45,9 +49,8 @@ public class ForumManageController implements Initializable {
 
     //@FXML
     //private StackPane stackPane;
-    @FXML
-    private JFXToggleButton toogleBtn;
-
+    //@FXML
+    //private JFXToggleButton toogleBtn;
     @FXML
     private JFXButton detailsBtn;
 
@@ -55,15 +58,54 @@ public class ForumManageController implements Initializable {
     private JFXButton addBtn;
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb)
+    {
         // TODO
         //Question que = new Question();
         //rootTable = new JFXTreeTableView<Question>();
-        listView.setExpanded(Boolean.TRUE);
+        //listView.setExpanded(Boolean.TRUE);
+        loadAllQuestion();
+        //dummyQuestion();
 
-        dummyQuestion();
+        // toogleExpansion();
     }
 
+    public void loadAllQuestion()
+    {
+        try
+        {
+            int len = listView.getItems().size();
+            listView.getItems().remove(0, len);
+            Session sess = dbCon.getSession();
+            //Transaction tr=  sess.beginTransaction();
+            List<Question> questions = sess.createQuery("select q from Question q").list();
+            sess.close();
+            for (Question q : questions)
+            {
+                //JFXListCell<Text> ct = new JFXListCell<>();
+                //ct.setText(value);
+                Label l = new Label();
+                l.setId(String.valueOf(q.Q_Id));
+                l.setText(q.question);
+                //l.setStyle("-fx-padding: 1;");
+                listView.getItems().add(l);
+            }
+
+        } catch (Exception e)
+        {
+            System.out.println(e);
+        }
+    }
+
+    public void loadQuestionByCategory(String cat)
+    {
+    }
+
+    public void loadQuestions(String ques)
+    {
+    }
+
+    /* 
     public void dummyQuestion() {
         int i;
         for (i = 0; i < 50; i++) {
@@ -76,8 +118,10 @@ public class ForumManageController implements Initializable {
         }
         listView.setExpanded(true);
     }
+     */
+    public void addQuestion()
+    {
 
-    public void addQuestion() {
         JFXDialogLayout content = new JFXDialogLayout();
         StackPane stackPane = new StackPane();
         stackPane.autosize();
@@ -101,39 +145,46 @@ public class ForumManageController implements Initializable {
 
         JFXButton closeBtn = new JFXButton("Return");
 
-        closeBtn.setOnAction(new EventHandler<ActionEvent>() {
+        closeBtn.setOnAction(new EventHandler<ActionEvent>()
+        {
             @Override
-            public void handle(ActionEvent event) {
+            public void handle(ActionEvent event)
+            {
                 //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 
                 dialog.close();
             }
         });
         JFXButton addBtn = new JFXButton("Add Question");
-        addBtn.setOnAction(new EventHandler<ActionEvent>() {
+        addBtn.setOnAction(new EventHandler<ActionEvent>()
+        {
             @Override
-            public void handle(ActionEvent event) {
+            public void handle(ActionEvent event)
+            {
                 //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
                 //Insert Here
                 String question = textArea1.getText();
-                System.out.println(question);
-                try {
+                //System.out.println(question);
+                try
+                {
 
                     //if(gb.user==null)
                     Session sess = dbCon.getSession();
                     Transaction tr = sess.beginTransaction();
-                    
+
                     Question q = new Question();
                     q.question = question;
-                    q.user = (User)sess.get(User.class,3);
-                    
+                    q.user = (User) sess.get(User.class, 3);
+
                     sess.save(q);
-                    
+
                     tr.commit();
                     sess.close();
-                } catch (Exception e) {
+                } catch (Exception e)
+                {
                     System.out.println(e);
                 }
+                loadAllQuestion();
                 dialog.close();
             }
         });
@@ -146,7 +197,8 @@ public class ForumManageController implements Initializable {
         dialog.show();
     }
 
-    public String randString() {
+    public String randString()
+    {
         byte[] array = new byte[25]; // length is bounded by 7
         new Random().nextBytes(array);
         String generatedString = new String(array, Charset.forName("UTF-8"));
@@ -154,32 +206,116 @@ public class ForumManageController implements Initializable {
         //System.out.println(generatedString);
     }
 
-    public void viewDetailsOnClick() {
-        //anchorPane.disableProperty();
-        //System.out.println(listView.getSelectionModel().getSelectedItem().getId());
-        Label l = listView.getSelectionModel().getSelectedItem();
-
-        JFXDialogLayout content = new JFXDialogLayout();
-        StackPane stackPane = new StackPane();
-        stackPane.autosize();
-
-        content.setHeading(new Text("Question"));
-        content.setBody(new Label("Question Details"));
-        JFXDialog dialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
-
-        JFXButton closeBtn = new JFXButton("Return");
-        closeBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                dialog.close();
+    public void viewDetailsOnClick()
+    {
+        try
+        {
+            //anchorPane.disableProperty();
+            //System.out.println(listView.getSelectionModel().getSelectedItem().getId());
+            Label l = listView.getSelectionModel().getSelectedItem();
+            if (l == null)
+            {
+                return;
             }
-        });
-        anchorPane.getChildren().add(stackPane);
-        content.setActions(closeBtn);
-        AnchorPane.setTopAnchor(stackPane, (anchorPane.getHeight()) / 3);
-        AnchorPane.setLeftAnchor(stackPane, (anchorPane.getWidth()) / 3);
+            JFXDialogLayout content = new JFXDialogLayout();
+            StackPane stackPane = new StackPane();
+            stackPane.autosize();
 
-        dialog.show();
+            content.setHeading(new Text("Question Details"));
+            int qid = Integer.valueOf(l.getId()).intValue();
+            Session sess = dbCon.getSession();
+            Transaction tr = sess.beginTransaction();
+            Question q = (Question) sess.get(Question.class, qid);
+            if (q == null)
+            {
+                return;
+            }
+            Answer ans = null;
+            Answer myAns = null;
+            //System.out.println(q+" \n"+q.answers.toArray().toString());
+            //List<Answer> lianswer = q.getAnswers();
+            //System.out.println(lianswer);
+            //for(Answer aa:lianswer)
+            //    System.out.println(aa);
+            if (!q.answers.isEmpty())
+            {
+                ans = q.answers.get(0);
+            }
+            for (Answer a : q.answers)
+            {
+                //System.out.println(a);moxank
+                if (a.isValidated)
+                {
+                    ans = a;
+                }
+                if (a.getUser() != null && gb.getUser() != null && a.getUser().UserId == gb.getUser().UserId)
+                {
+                    myAns = a;
+                }
+            }
+            Text temp = new Text("Question: " + q.question + "\nAnswer: " + ans.Answer);
+
+            tr.commit();
+            sess.close();
+            AnchorPane an = new AnchorPane();
+            an.setPrefHeight(400);
+            an.setPrefWidth(600);
+            JFXTextArea tarea = new JFXTextArea();
+
+            tarea.setPrefHeight(100);
+            tarea.setPromptText("Enter Your Answer");
+            if (myAns != null)
+            {
+                tarea.setText(myAns.getAnswer());
+            }
+
+            an.getChildren().addAll(temp, tarea);
+            JFXButton updateAns = new JFXButton("Submit Answer");
+            updateAns.setOnAction(new EventHandler<ActionEvent>()
+            {
+                @Override
+                public void handle(ActionEvent event)
+                {
+                    if (tarea.getText() == null)
+                    {
+                        return;
+                    }
+                    Answer ans12 = new Answer();
+                    ans12.Answer = tarea.getText();
+
+                    ans12.isValidated = true;
+                    Session sess = dbCon.getSession();
+                    ans12.user = (User) sess.get(User.class, 3);
+                    ans12.question = (Question) sess.get(Question.class, qid);
+                    //q.answers.add(ans12);
+                    sess.saveOrUpdate(ans12);
+                    sess.close();
+                    //System.out.println(tarea.getText());
+                    //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                }
+            });
+            content.setBody(an);
+            JFXDialog dialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
+
+            JFXButton closeBtn = new JFXButton("Return");
+            closeBtn.setOnAction(new EventHandler<ActionEvent>()
+            {
+                @Override
+                public void handle(ActionEvent event)
+                {
+                    //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    dialog.close();
+                }
+            });
+            anchorPane.getChildren().add(stackPane);
+            content.setActions(updateAns, closeBtn);
+            AnchorPane.setTopAnchor(stackPane, 20.0);
+            AnchorPane.setLeftAnchor(stackPane, 40.0);
+            AnchorPane.setBottomAnchor(tarea, 8.0);
+            dialog.show();
+        } catch (Exception e)
+        {
+            System.out.println(e);
+        }
     }
 }

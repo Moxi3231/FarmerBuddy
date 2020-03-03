@@ -16,24 +16,28 @@ import javax.persistence.*;
 @Entity
 @Table(name = "User")
 public class User {
-    @Column(unique=true,nullable = false)
+
+    @Column(unique = true, nullable = false)
     public String Email;
     public String PhoneNum;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public int UserId;
-    @Column(unique = false,nullable = false)
+    @Column(unique = false, nullable = false)
     public String UserName;
     public String State;
     public String District;
     public String Region;
     public int RoleId;
-    
+
     @OneToMany(mappedBy = "user")
     public List<Question> questions;
-    
+
+    @OneToMany(mappedBy = "user")
+    public List<Answer> answers;
+
     @ManyToOne
-    @JoinColumn(name = "role_id",nullable = false)
+    @JoinColumn(name = "role_id", nullable = false)
     public User_Role role;
     public String Password;
 
@@ -44,7 +48,6 @@ public class User {
     public void setPassword(String Password) {
         this.Password = Password;
     }
-    
 
     @Override
     public String toString() {
