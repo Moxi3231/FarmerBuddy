@@ -145,6 +145,27 @@ public class ForumManageController implements Initializable
                 JFXToggleButton tbtn = new JFXToggleButton();
                 tbtn.setText("Toogle Valid");
                 tbtn.setSelected(answer.isValidated);
+                tbtn.setId(String.valueOf(answer.AID));
+                tbtn.setOnAction(new EventHandler<ActionEvent>()
+                {
+                    @Override
+                    public void handle(ActionEvent event)
+                    {
+                        int id = Integer.valueOf( ((JFXToggleButton)event.getSource()).getId()).intValue();
+                        Session sess=dbCon.getSession();
+                        Transaction tr = sess.beginTransaction();
+                        Answer ans = (Answer)sess.get(Answer.class,id);
+                        if(ans==null)
+                                return;
+                        
+                            ans.isValidated = !ans.isValidated;
+                            sess.saveOrUpdate(ans);
+                        tr.commit();
+                        sess.close();
+                        //System.out.println(id);
+                        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+                });
                 if(gb.user == null || gb.getUser().RoleId != 2)
                 {
                     tbtn.setDisable(true);
@@ -174,6 +195,7 @@ public class ForumManageController implements Initializable
             AnchorPane.setLeftAnchor(stackPane, 30.0);
             AnchorPane.setTopAnchor(innerList,20.0);
             dialog.show();
+            
         } catch (Exception e)
         {
             System.out.println(e);
