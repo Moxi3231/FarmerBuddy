@@ -6,8 +6,8 @@
 package farmerbuddy;
 
 import com.jfoenix.controls.*;
-import com.jfoenix.controls.JFXTreeTableView;
 import fb_classes.Answer;
+import fb_classes.Category;
 import fb_classes.Question;
 import fb_classes.User;
 import java.net.URL;
@@ -17,10 +17,12 @@ import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.*;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import org.hibernate.Session;
@@ -60,14 +62,7 @@ public class ForumManageController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        // TODO
-        //Question que = new Question();
-        //rootTable = new JFXTreeTableView<Question>();
-        //listView.setExpanded(Boolean.TRUE);
         loadAllQuestion();
-        //dummyQuestion();
-
-        // toogleExpansion();
     }
 
     public void loadAllQuestion()
@@ -103,6 +98,86 @@ public class ForumManageController implements Initializable
 
     public void loadQuestions(String ques)
     {
+    }
+
+    public void expandQuestion()
+    {
+        try
+        {
+            //anchorPane.disableProperty();
+            //System.out.println(listView.getSelectionModel().getSelectedItem().getId());
+            Label l = listView.getSelectionModel().getSelectedItem();
+            if (l == null)
+            {
+                return;
+            }
+            JFXDialogLayout content = new JFXDialogLayout();
+            StackPane stackPane = new StackPane();
+            //stackPane.setPrefSize(900, 550);
+            
+            content.setHeading(new Text("Question Details"));
+            int qid = Integer.valueOf(l.getId()).intValue();
+            Session sess = dbCon.getSession();
+            Transaction tr = sess.beginTransaction();
+            Question q = (Question) sess.get(Question.class, qid);
+            if (q == null)
+            {
+                return;
+            }
+            
+            
+            Text temp = new Text("Question: " + q.question  );
+
+            tr.commit();
+            sess.close();
+            AnchorPane an = new AnchorPane();
+            an.setPrefHeight(400);
+            an.setPrefWidth(900);
+            an.setMinWidth(800.0);
+           
+            
+            JFXListView<HBox> innerList=new JFXListView<HBox>();
+            innerList.setPrefSize(800, 385);
+            List<Answer> answers = q.getAnswers();
+            for(Answer answer:answers)
+            {
+                Label label1 = new Label(answer.getAnswer());
+                JFXToggleButton tbtn = new JFXToggleButton();
+                tbtn.setText("Toogle Valid");
+                tbtn.setSelected(answer.isValidated);
+                if(gb.user == null || gb.getUser().RoleId != 2)
+                {
+                    tbtn.setDisable(true);
+                }
+                //tbtn.setMaxHeight(5.0);
+                HBox hb = new HBox();
+                hb.getChildren().addAll(label1,tbtn);
+                innerList.getItems().add(hb);
+            }
+            an.getChildren().addAll(temp,innerList);
+            content.setBody(an);
+            JFXDialog dialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
+
+            JFXButton closeBtn = new JFXButton("Return");
+            closeBtn.setOnAction(new EventHandler<ActionEvent>()
+            {
+                @Override
+                public void handle(ActionEvent event)
+                {
+                    //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    dialog.close();
+                }
+            });
+            anchorPane.getChildren().add(stackPane);
+            content.setActions( closeBtn);
+            AnchorPane.setTopAnchor(stackPane, 20.0);
+            AnchorPane.setLeftAnchor(stackPane, 30.0);
+            AnchorPane.setTopAnchor(innerList,20.0);
+            dialog.show();
+        } catch (Exception e)
+        {
+            System.out.println(e);
+        }
     }
 
     /* 
@@ -230,18 +305,18 @@ public class ForumManageController implements Initializable
             {
                 return;
             }
-            Answer ans = null;
-            Answer myAns = null;
+            Answer ans = new Answer();
+            Answer myAns = new Answer();
             //System.out.println(q+" \n"+q.answers.toArray().toString());
             //List<Answer> lianswer = q.getAnswers();
             //System.out.println(lianswer);
             //for(Answer aa:lianswer)
             //    System.out.println(aa);
-            if (!q.answers.isEmpty())
+            if (!q.getAnswers().isEmpty())
             {
-                ans = q.answers.get(0);
+                ans = q.getAnswers().get(0);
             }
-            for (Answer a : q.answers)
+            for (Answer a : q.getAnswers())
             {
                 //System.out.println(a);moxank
                 if (a.isValidated)
@@ -253,7 +328,24 @@ public class ForumManageController implements Initializable
                     myAns = a;
                 }
             }
-            Text temp = new Text("Question: " + q.question + "\nAnswer: " + ans.Answer);
+            String ca = "";
+            if (q.getQc() != null)
+            {
+                List<Category> categories = q.getQc().getCategory();
+
+                int i = 0;
+                for (Category c : categories)
+                {
+                    ca += String.valueOf(i) + " " + c.getCategory() + "\n";
+                    i++;
+                }
+
+            }
+            if (ca == "")
+            {
+                ca = "No categories defined";
+            }
+            Text temp = new Text("Question: " + q.question + "\n Category: " + ca + "\nAnswer: " + ans.Answer);
 
             tr.commit();
             sess.close();

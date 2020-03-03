@@ -37,7 +37,7 @@ public class LoginController implements Initializable {
     private JFXTextField email;
 
     @FXML
-    private JFXTextField password;
+    private JFXPasswordField password;
     @FXML
     private AnchorPane rootPane;
 
@@ -92,7 +92,7 @@ public class LoginController implements Initializable {
             //Stage s=(Stage)rootPane.getScene().getWindow();
             //rootPane.ma 
             rootPane.getChildren().setAll(root);
-
+            
 //System.out.print("Adsdasdasdad");
             // s.setMaximized(true);
         } catch (IOException ex) {

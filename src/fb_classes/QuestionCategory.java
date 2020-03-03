@@ -24,6 +24,26 @@ public class QuestionCategory {
     //public int CategoryId;
     public int QId;
 
+    public List<Category> getCategory()
+    {
+        return category;
+    }
+
+    public void setCategory(List<Category> category)
+    {
+        this.category = category;
+    }
+
+    public Question getQue()
+    {
+        return que;
+    }
+
+    public void setQue(Question que)
+    {
+        this.que = que;
+    }
+
     @OneToOne(cascade = CascadeType.ALL)
     public Question que;
     

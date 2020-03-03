@@ -5,6 +5,7 @@
  */
 package farmerbuddy;
 
+import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import fb_classes.*;
@@ -43,7 +44,7 @@ public class RegistrationController implements Initializable {
     private JFXTextField email;
 
     @FXML
-    private JFXTextField password;
+    private JFXPasswordField password;
 
     @FXML
     private JFXTextField mobilenumber;

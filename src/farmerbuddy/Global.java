@@ -5,6 +5,8 @@
  */
 package farmerbuddy;
 import fb_classes.*;
+import java.util.Dictionary;
+import java.util.Hashtable;
 /**
  *
  * @author moxan
@@ -12,6 +14,7 @@ import fb_classes.*;
 public class Global {
     public User user;
     private static Global gb;
+    //public Dictionary<String,Object> data;
     private Global()
     {
         //gb = new Global();
@@ -25,6 +28,7 @@ public class Global {
         if(gb==null)
         {
             gb = new Global();
+            //data = new Hashtable<>(0);
         }
         return gb;
     }

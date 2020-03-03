@@ -2,17 +2,20 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.effect.Glow?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"  prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #00c0ff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="farmerbuddy.ForumManageController">
+<AnchorPane id="AnchorPane" fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #00c0ff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="farmerbuddy.ForumManageController">
    <children>
-      <JFXListView fx:id="listView" layoutX="14.0" layoutY="69.0" prefHeight="476.0" prefWidth="640.0" stylesheets="@../StyleSheet/Style.css" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="246.0" AnchorPane.topAnchor="69.0">
+      <JFXListView fx:id="listView" layoutX="14.0" layoutY="16.0" prefHeight="529.0" prefWidth="642.0" stylesheets="@../StyleSheet/Style.css" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="244.0" AnchorPane.topAnchor="16.0">
          <effect>
             <Glow />
-         </effect>
-      </JFXListView>
-      <JFXButton fx:id="detailsBtn" buttonType="RAISED" layoutX="696.0" layoutY="201.0" onMouseClicked="#viewDetailsOnClick" prefHeight="42.0" prefWidth="143.0" ripplerFill="#8274cd" style="-fx-background-color: #7f86ce;" text="View Details" AnchorPane.rightAnchor="60.80000000000001" />
-      <JFXButton fx:id="addBtn" buttonType="RAISED" contentDisplay="CENTER" layoutX="696.0" layoutY="99.0" onMouseClicked="#addQuestion" prefHeight="42.0" prefWidth="143.0" ripplerFill="#4bd2bd" style="-fx-background-color: #7F86CE;" text="Add Question" AnchorPane.bottomAnchor="458.6" AnchorPane.leftAnchor="696.0" AnchorPane.rightAnchor="60.80000000000001" AnchorPane.topAnchor="98.99999999999997" />
+         </effect></JFXListView>
+      <JFXButton fx:id="detailsBtn" buttonType="RAISED" layoutX="696.0" layoutY="172.0" onMouseClicked="#viewDetailsOnClick" prefHeight="42.0" prefWidth="143.0" ripplerFill="#8274cd" style="-fx-background-color: #7f86ce;" text="Answer" AnchorPane.rightAnchor="60.799999999999955" />
+      <JFXButton fx:id="addBtn" buttonType="RAISED" contentDisplay="CENTER" layoutX="696.0" layoutY="67.0" onMouseClicked="#addQuestion" prefHeight="42.0" prefWidth="143.0" ripplerFill="#4bd2bd" style="-fx-background-color: #A569BD;" text="Add Question" AnchorPane.bottomAnchor="490.6" AnchorPane.leftAnchor="696.0" AnchorPane.rightAnchor="60.799999999999955" AnchorPane.topAnchor="67.0" />
+      <JFXButton buttonType="RAISED" layoutX="673.0" layoutY="502.0" prefHeight="42.0" prefWidth="207.0" ripplerFill="#8d80cd" style="-fx-background-color: #7D3C98;" text="Search" />
+      <JFXButton buttonType="RAISED" layoutX="696.0" layoutY="279.0" onMouseClicked="#expandQuestion" prefHeight="42.0" prefWidth="143.0" ripplerFill="#8a7fc2" style="-fx-background-color: #A569BD;" text="Expand Question" />
+      <JFXTextField focusColor="WHITE" layoutX="673.0" layoutY="401.0" prefHeight="42.0" prefWidth="207.0" promptText="Category/Question" unFocusColor="#202121" />
    </children>
 </AnchorPane>
