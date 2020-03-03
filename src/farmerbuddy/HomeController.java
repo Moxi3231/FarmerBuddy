@@ -58,7 +58,7 @@ public class HomeController implements Initializable {
       //changeToHome();
     }    
     public void changeToForum()
-    {
+    {   
      try {
             // TODO
             AnchorPane root = FXMLLoader.load(getClass().getResource("ForumManage.fxml"));
