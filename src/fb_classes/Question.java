@@ -5,24 +5,51 @@
  */
 package fb_classes;
 
+import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import org.hibernate.*;
+
 /**
  *
  * @author moxan
  */
+@Entity
 public class Question {
-    public int Q_Id;
-   public int UID;
-   public String question;
 
-    public Question(int Q_Id, int UID, String question) {
-        this.Q_Id = Q_Id;
-        this.UID = UID;
-        this.question = question;
+    @Id
+    public int Q_Id;
+    //public int UID;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(nullable = true, name = "user_id")
+    public User user;
+    public String question;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    public QuestionCategory qc;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    public List<Answer> answers;
+    
+    public User getUser() {
+        return user;
     }
 
-    public Question(int UID, String question) {
-        this.UID = UID;
-        this.question = question;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public QuestionCategory getQc() {
+        return qc;
+    }
+
+    public void setQc(QuestionCategory qc) {
+        this.qc = qc;
     }
 
     public Question() {
@@ -36,14 +63,6 @@ public class Question {
         this.Q_Id = Q_Id;
     }
 
-    public int getUID() {
-        return UID;
-    }
-
-    public void setUID(int UID) {
-        this.UID = UID;
-    }
-
     public String getQuestion() {
         return question;
     }
@@ -54,7 +73,7 @@ public class Question {
 
     @Override
     public String toString() {
-        return "Question{" + "Q_Id=" + Q_Id + ", UID=" + UID + ", question=" + question + '}';
+        return "Question{" + "Q_Id=" + Q_Id + ", user=" + user + ", question=" + question + '}';
     }
-   
+
 }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXTabPane?>
-<?import com.jfoenix.controls.JFXTextArea?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.layout.AnchorPane?>
 
@@ -11,10 +10,7 @@
          <tabs>
             <Tab text="Home">
               <content>
-                <AnchorPane fx:id="HomeAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <JFXTextArea fx:id="textRA" layoutX="81.0" layoutY="106.0" />
-                     </children></AnchorPane>
+                <AnchorPane fx:id="HomeAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
               </content>
             </Tab>
             <Tab text="Crops">

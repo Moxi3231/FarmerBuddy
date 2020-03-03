@@ -8,6 +8,7 @@ package farmerbuddy;
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.JFXTreeTableView;
 import fb_classes.Question;
+import fb_classes.User;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.Random;
@@ -20,6 +21,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 /**
  * FXML Controller class
@@ -33,6 +36,8 @@ public class ForumManageController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    private Global gb = Global.getGlobal();
+    private DBContext dbCon = DBContext.getDbContext();
     @FXML
     private AnchorPane anchorPane;
     @FXML
@@ -72,6 +77,75 @@ public class ForumManageController implements Initializable {
         listView.setExpanded(true);
     }
 
+    public void addQuestion() {
+        JFXDialogLayout content = new JFXDialogLayout();
+        StackPane stackPane = new StackPane();
+        stackPane.autosize();
+
+        content.setHeading(new Text("Add Question"));
+        //content.setBody(new Label("Question Details"));
+
+        AnchorPane an1 = new AnchorPane();
+        an1.setPrefWidth(600);
+
+        JFXTextArea textArea1 = new JFXTextArea();
+        //tf.autosize();
+        textArea1.setPrefHeight(75);
+        textArea1.setPrefWidth(550.0);
+
+        textArea1.setPromptText("Enter Your Question Here");
+        an1.getChildren().add(textArea1);
+        content.setBody(an1);
+
+        JFXDialog dialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
+
+        JFXButton closeBtn = new JFXButton("Return");
+
+        closeBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+                dialog.close();
+            }
+        });
+        JFXButton addBtn = new JFXButton("Add Question");
+        addBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                //Insert Here
+                String question = textArea1.getText();
+                System.out.println(question);
+                try {
+
+                    //if(gb.user==null)
+                    Session sess = dbCon.getSession();
+                    Transaction tr = sess.beginTransaction();
+                    
+                    Question q = new Question();
+                    q.question = question;
+                    q.user = (User)sess.get(User.class,3);
+                    
+                    sess.save(q);
+                    
+                    tr.commit();
+                    sess.close();
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+                dialog.close();
+            }
+        });
+
+        anchorPane.getChildren().add(stackPane);
+        content.setActions(addBtn, closeBtn);
+        AnchorPane.setTopAnchor(stackPane, (anchorPane.getHeight()) / 6);
+        AnchorPane.setLeftAnchor(stackPane, (anchorPane.getWidth()) / 6);
+
+        dialog.show();
+    }
+
     public String randString() {
         byte[] array = new byte[25]; // length is bounded by 7
         new Random().nextBytes(array);
@@ -84,12 +158,11 @@ public class ForumManageController implements Initializable {
         //anchorPane.disableProperty();
         //System.out.println(listView.getSelectionModel().getSelectedItem().getId());
         Label l = listView.getSelectionModel().getSelectedItem();
-        
+
         JFXDialogLayout content = new JFXDialogLayout();
         StackPane stackPane = new StackPane();
         stackPane.autosize();
-        
-        
+
         content.setHeading(new Text("Question"));
         content.setBody(new Label("Question Details"));
         JFXDialog dialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
@@ -104,9 +177,9 @@ public class ForumManageController implements Initializable {
         });
         anchorPane.getChildren().add(stackPane);
         content.setActions(closeBtn);
-	AnchorPane.setTopAnchor(stackPane, (anchorPane.getHeight()) / 3);
-	AnchorPane.setLeftAnchor(stackPane, (anchorPane.getWidth() ) / 3);
-        
+        AnchorPane.setTopAnchor(stackPane, (anchorPane.getHeight()) / 3);
+        AnchorPane.setLeftAnchor(stackPane, (anchorPane.getWidth()) / 3);
+
         dialog.show();
     }
 }

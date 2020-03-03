@@ -6,6 +6,7 @@
 package fb_classes;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.*;
 
 /**
@@ -27,6 +28,9 @@ public class User {
     public String District;
     public String Region;
     public int RoleId;
+    
+    @OneToMany(mappedBy = "user")
+    public List<Question> questions;
     
     @ManyToOne
     @JoinColumn(name = "role_id",nullable = false)

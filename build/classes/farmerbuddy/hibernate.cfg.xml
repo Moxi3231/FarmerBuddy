@@ -50,5 +50,9 @@ Contributor(s):
     <property name="hibernate.connection.autocommit">true</property>
     <mapping class="fb_classes.User"/>
     <mapping class="fb_classes.User_Role"/>
+    <mapping class="fb_classes.Category"/>
+    <mapping class="fb_classes.Answer"/>
+    <mapping class="fb_classes.Question"/>
+    <mapping class="fb_classes.QuestionCategory"/>
   </session-factory>
 </hibernate-configuration>

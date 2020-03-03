@@ -5,13 +5,22 @@
  */
 package fb_classes;
 
+import java.util.List;
+import javax.persistence.*;
+
 /**
  *
  * @author moxan
  */
+@Entity
 public class Category {
+    @Id
     public int CategoryId;
     public String Category;
+    
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="question_id")
+    public List<QuestionCategory> questionCategories;
 
     public Category() {
     }

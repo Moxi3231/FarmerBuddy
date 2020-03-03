@@ -22,6 +22,7 @@ import javafx.scene.layout.AnchorPane;
  * @author moxan
  */
 public class HomeController implements Initializable {
+
     private Global gb = Global.getGlobal();
     @FXML
     private JFXTextArea textRA;
@@ -39,7 +40,7 @@ public class HomeController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-      /*  try {
+        /*  try {
             // TODO
            // AnchorPane root = FXMLLoader.load(getClass().getResource("HomeMain.fxml"));
            // HomeAnchorPane.getChildren().setAll(root);
@@ -50,69 +51,60 @@ public class HomeController implements Initializable {
         {
            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, e);
         }
-    */
-      textRA.setText(gb.user.toString());
-      changeToForum();
-      //changeToCrops();
-      //changeToFertilizer();
-      //changeToHome();
-    }    
-    public void changeToForum()
-    {   
-     try {
+         */
+        //textRA.setText(gb.user.toString());
+        changeToForum();
+        //changeToCrops();
+        //changeToFertilizer();
+        //changeToHome();
+    }
+
+    public void changeToForum() {
+        try {
             // TODO
             AnchorPane root = FXMLLoader.load(getClass().getResource("ForumManage.fxml"));
             ForumAnchorPane.getChildren().setAll(root);
         } catch (IOException ex) {
             Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception e) {
+            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, e);
         }
-        catch(Exception e)
-        {
-           Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, e);
-        }   
     }
-    public void changeToHome()
-    {
-     try {
+
+    public void changeToHome() {
+        try {
             // TODO
             AnchorPane root = FXMLLoader.load(getClass().getResource("HomeMain.fxml"));
             HomeAnchorPane.getChildren().setAll(root);
         } catch (IOException ex) {
             Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception e) {
+            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, e);
         }
-        catch(Exception e)
-        {
-           Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, e);
-        }      
     }
-    public void changeToCrops()
-    {
+
+    public void changeToCrops() {
         try {
             // TODO
             AnchorPane root = FXMLLoader.load(getClass().getResource("CropMain.fxml"));
             CropsAnchorPane.getChildren().setAll(root);
         } catch (IOException ex) {
             Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception e) {
+            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, e);
         }
-        catch(Exception e)
-        {
-           Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, e);
-        }   
     }
-    public void changeToFertilizer()
-    {
+
+    public void changeToFertilizer() {
         try {
             // TODO
             AnchorPane root = FXMLLoader.load(getClass().getResource("FertilizerMain.fxml"));
             FertilizerAnchorPane.getChildren().setAll(root);
         } catch (IOException ex) {
             Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception e) {
+            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, e);
         }
-        catch(Exception e)
-        {
-           Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, e);
-        }   
     }
-   
-    
+
 }

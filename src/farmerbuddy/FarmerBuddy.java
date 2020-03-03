@@ -40,6 +40,7 @@ public class FarmerBuddy extends Application {
         //seedM();
         launch(args);
         //seedM();
+        DBContext.getDbContext().close();
     }
 
     public static void seedM() {

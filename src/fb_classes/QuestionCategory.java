@@ -5,17 +5,30 @@
  */
 package fb_classes;
 
+import java.util.List;
+import javax.persistence.*;
+
 /**
  *
  * @author moxan
  */
+@Entity
 public class QuestionCategory {
+    @Id
     public int QCID;
-    public int CategoryId;
+    
+    @ManyToMany(cascade = CascadeType.ALL)
+    public List<Category> category;
+    
+    //public int CategoryId;
     public int QId;
 
-    public QuestionCategory(int CategoryId, int QId) {
-        this.CategoryId = CategoryId;
+    @OneToOne(cascade = CascadeType.ALL)
+    public Question que;
+    
+    public QuestionCategory(int QId) {
+        //this.CategoryId = CategoryId;
+        //this.category = c;
         this.QId = QId;
     }
 
@@ -27,13 +40,7 @@ public class QuestionCategory {
         this.QCID = QCID;
     }
 
-    public int getCategoryId() {
-        return CategoryId;
-    }
-
-    public void setCategoryId(int CategoryId) {
-        this.CategoryId = CategoryId;
-    }
+    
 
     public int getQId() {
         return QId;
@@ -45,7 +52,7 @@ public class QuestionCategory {
 
     @Override
     public String toString() {
-        return "QuestionCategory{" + "QCID=" + QCID + ", CategoryId=" + CategoryId + ", QId=" + QId + '}';
+        return "QuestionCategory{" + "QCID=" + QCID + ", Category=" + category + ", QId=" + QId + '}';
     }
     
 }

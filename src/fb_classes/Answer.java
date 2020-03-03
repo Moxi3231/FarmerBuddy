@@ -4,24 +4,38 @@
  * and open the template in the editor.
  */
 package fb_classes;
-
+import javax.persistence.*;
 /**
  *
  * @author moxan
  */
+@Entity
 public class Answer {
+    @Id
     public int AID;
-    public int QID;
+    //public int QID;
+    
+    @ManyToOne(cascade = CascadeType.ALL)
+    public Question question;
+    
     public String Answer;
     public int UID;
     public boolean isValidated;
 
-    public Answer(int AID, int QID, String Answer, int UID, boolean isValidated) {
+    public Answer(int AID, Question QID, String Answer, int UID, boolean isValidated) {
         this.AID = AID;
-        this.QID = QID;
+        this.question = QID;
         this.Answer = Answer;
         this.UID = UID;
         this.isValidated = isValidated;
+    }
+
+    public Question getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
     }
 
     public int getAID() {
@@ -32,13 +46,7 @@ public class Answer {
         this.AID = AID;
     }
 
-    public int getQID() {
-        return QID;
-    }
-
-    public void setQID(int QID) {
-        this.QID = QID;
-    }
+    
 
     public String getAnswer() {
         return Answer;
@@ -66,7 +74,7 @@ public class Answer {
 
     @Override
     public String toString() {
-        return "Answer{" + "AID=" + AID + ", QID=" + QID + ", Answer=" + Answer + ", UID=" + UID + ", isValidated=" + isValidated + '}';
+        return "Answer{" + "AID=" + AID + ", Question=" + question + ", Answer=" + Answer + ", UID=" + UID + ", isValidated=" + isValidated + '}';
     }
     
 }
