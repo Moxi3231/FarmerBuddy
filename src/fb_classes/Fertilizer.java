@@ -25,11 +25,24 @@ public class Fertilizer
     public List<String> Regions;
     public List<String> Soils;
     
+    @OneToOne
+    public FertilizerPrice fertilizerPrice;
+    
     @ManyToMany
     public List<Crop> crops;
     
     
     public Fertilizer(){}
+
+    public FertilizerPrice getFertilizerPrice()
+    {
+        return fertilizerPrice;
+    }
+
+    public void setFertilizerPrice(FertilizerPrice fertilizerPrice)
+    {
+        this.fertilizerPrice = fertilizerPrice;
+    }
 
     public int getFertilizerId()
     {

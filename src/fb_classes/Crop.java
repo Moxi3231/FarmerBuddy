@@ -26,6 +26,9 @@ public class Crop
     public int Temperature;
     public String Description;
  
+    @OneToOne
+    public CropPrice cropPrice;
+    
     @ManyToMany
     public List<Fertilizer> fertilizers;
 
@@ -41,6 +44,16 @@ public class Crop
     public void setCropId(int CropId)
     {
         this.CropId = CropId;
+    }
+
+    public CropPrice getCropPrice()
+    {
+        return cropPrice;
+    }
+
+    public void setCropPrice(CropPrice cropPrice)
+    {
+        this.cropPrice = cropPrice;
     }
 
     public String getCropName()
