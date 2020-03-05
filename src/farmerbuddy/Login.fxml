@@ -8,17 +8,17 @@
 
 <AnchorPane id="AnchorPane" fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="farmerbuddy.LoginController">
     <children>
-      <Pane layoutX="-1.0" layoutY="2.0" prefHeight="594.0" prefWidth="900.0" style="-fx-background-color: #ffffff;">
+      <Pane layoutY="2.0" prefHeight="594.0" prefWidth="900.0" style="-fx-background-color: #ffffff;" styleClass="loginPane" stylesheets="@../StyleSheet/Style.css">
          <children>
-            <JFXTextField fx:id="email" layoutX="294.0" layoutY="87.0" prefHeight="25.0" prefWidth="313.0" promptText="Email" />
-            <JFXButton buttonType="RAISED" layoutX="324.0" layoutY="285.0" onMouseClicked="#login" prefHeight="25.0" prefWidth="254.0" ripplerFill="#d25353" style="-fx-background-color: #adbce6;" text="Login" />
-            <JFXButton buttonType="RAISED" layoutX="354.0" layoutY="350.0" minWidth="-Infinity" onMouseClicked="#onRegisterClick" prefHeight="25.0" prefWidth="194.0" style="-fx-background-color: #72bcd4;" text="SIgn Up">
-               <ripplerFill>
-                  
-               </ripplerFill>
-            </JFXButton>
-            <JFXButton buttonType="RAISED" layoutX="406.0" layoutY="418.0" onMouseClicked="#changeToHome" prefHeight="25.0" prefWidth="89.0" ripplerFill="#b8ed4f" style="-fx-background-color: #2DFC8D;" text="Home" />
-            <JFXPasswordField fx:id="password" layoutX="294.0" layoutY="187.0" prefHeight="25.0" prefWidth="313.0" promptText="Password" />
+            <JFXTextField fx:id="email" labelFloat="true" layoutX="294.0" layoutY="87.0" prefHeight="25.0" prefWidth="313.0" promptText="Email" />
+            <Pane layoutX="295.0" layoutY="271.0" prefHeight="296.0" prefWidth="313.0" stylesheets="@../StyleSheet/Style.css">
+               <children>
+                  <JFXButton buttonType="RAISED" layoutX="48.0" layoutY="73.0" onMouseClicked="#login" prefHeight="25.0" prefWidth="211.0" ripplerFill="#d15454" style="-fx-background-color: #adbce6;" text="Login" />
+                  <JFXButton buttonType="RAISED" layoutX="88.0" layoutY="123.0" minWidth="-Infinity" onMouseClicked="#onRegisterClick" prefHeight="25.0" prefWidth="132.0" style="-fx-background-color: #72bcd4;" text="Sign Up" />
+                  <JFXButton buttonType="RAISED" layoutX="109.0" layoutY="177.0" onMouseClicked="#changeToHome" prefHeight="25.0" prefWidth="89.0" ripplerFill="#50cfeb" style="-fx-background-color: #2DFC8D;" text="Home" />
+               </children>
+            </Pane>
+            <JFXPasswordField fx:id="password" labelFloat="true" layoutX="294.0" layoutY="187.0" prefHeight="25.0" prefWidth="313.0" promptText="Password" />
          </children>
       </Pane>
    </children>

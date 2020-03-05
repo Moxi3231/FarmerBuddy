@@ -12,13 +12,28 @@ and open the template in the editor.
     -fx-vertical-gap: 10;
     -fx-cell-vertical-margin: 10.0;
     -fx-background-insets: 0;
-    
+
 }
 .jfx-list-cell{
     -fx-padding:10;
-     -fx-vertical-gap: 10;
+    -fx-vertical-gap: 10;
     -fx-cell-vertical-margin: 10.0;
 }
-Label{
-    
+.loginPane{
+    -fx-background-image: url(../resources/CornField.jfif);
+    -fx-background-size: 100%;
+
 }
+.raisedPaneWhite{
+    -fx-background-color: black;
+    -fx-opacity: .75;
+    -fx-text-fill: white;
+    
+    -fx-background-insets: 1; 
+    -fx-background-radius: 1; 
+    -fx-effect: dropshadow(one-pass-box, #000, 10, 0, 0, 0);
+    }
+    .raisedPaneWhite > *{
+        -fx-opacity: 1;
+        -fx-text-fill: white;
+    }

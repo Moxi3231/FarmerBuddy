@@ -6,7 +6,7 @@
 package fb_classes;
 import javax.persistence.*;
 import java.util.*;
-import javax.annotation.processing.Generated;
+//import javax.annotation.processing.Generated;
 /**
  *
  * @author moxan

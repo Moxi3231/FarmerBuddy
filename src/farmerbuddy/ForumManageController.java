@@ -25,6 +25,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.*;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -42,8 +43,8 @@ public class ForumManageController implements Initializable
      * Initializes the controller class.
      */
     //private boolean tFlag =true;
-    private Global gb = Global.getGlobal();
-    private DBContext dbCon = DBContext.getDbContext();
+    private final Global gb = Global.getGlobal();
+    private final DBContext dbCon = DBContext.getDbContext();
     @FXML
     private AnchorPane anchorPane;
     @FXML
@@ -75,18 +76,19 @@ public class ForumManageController implements Initializable
             //Transaction tr=  sess.beginTransaction();
             List<Question> questions = sess.createQuery("select q from Question q").list();
             sess.close();
-            for (Question q : questions)
-            {
+            questions.stream().map((q) -> {
                 //JFXListCell<Text> ct = new JFXListCell<>();
                 //ct.setText(value);
                 Label l = new Label();
                 l.setId(String.valueOf(q.Q_Id));
                 l.setText(q.question);
+                return l;
+            }).forEachOrdered((l) -> {
                 //l.setStyle("-fx-padding: 1;");
                 listView.getItems().add(l);
-            }
+            });
 
-        } catch (Exception e)
+        } catch (HibernateException e)
         {
             System.out.println(e);
         }
@@ -116,7 +118,7 @@ public class ForumManageController implements Initializable
             //stackPane.setPrefSize(900, 550);
             
             content.setHeading(new Text("Question Details"));
-            int qid = Integer.valueOf(l.getId()).intValue();
+            int qid = Integer.parseInt(l.getId());
             Session sess = dbCon.getSession();
             Transaction tr = sess.beginTransaction();
             Question q = (Question) sess.get(Question.class, qid);
@@ -139,32 +141,36 @@ public class ForumManageController implements Initializable
             JFXListView<HBox> innerList=new JFXListView<HBox>();
             innerList.setPrefSize(800, 385);
             List<Answer> answers = q.getAnswers();
+            
+            Label temp1=new Label("Answers"),temp2=new Label("IsValid");
+            temp1.setStyle("-fx-padding:10;");
+            temp2.setStyle("-fx-padding:10;");
+            
+            HBox hbtemp = new HBox(temp1,temp2);
+            
+            innerList.getItems().add(hbtemp);
+            
             for(Answer answer:answers)
             {
                 Label label1 = new Label(answer.getAnswer());
                 JFXToggleButton tbtn = new JFXToggleButton();
-                tbtn.setText("Toogle Valid");
+                //tbtn.setText("Toogle Valid");
                 tbtn.setSelected(answer.isValidated);
                 tbtn.setId(String.valueOf(answer.AID));
-                tbtn.setOnAction(new EventHandler<ActionEvent>()
-                {
-                    @Override
-                    public void handle(ActionEvent event)
-                    {
-                        int id = Integer.valueOf( ((JFXToggleButton)event.getSource()).getId()).intValue();
-                        Session sess=dbCon.getSession();
-                        Transaction tr = sess.beginTransaction();
-                        Answer ans = (Answer)sess.get(Answer.class,id);
-                        if(ans==null)
-                                return;
-                        
-                            ans.isValidated = !ans.isValidated;
-                            sess.saveOrUpdate(ans);
-                        tr.commit();
-                        sess.close();
-                        //System.out.println(id);
-                        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                    }
+
+                tbtn.setOnAction((ActionEvent event) -> {
+                    int id = Integer.parseInt(((JFXToggleButton)event.getSource()).getId());
+                    Session sess1 = dbCon.getSession();
+                    Transaction tr1 = sess1.beginTransaction();
+                    Answer ans = (Answer) sess1.get(Answer.class, id);
+                    if(ans==null)
+                        return;
+                    ans.isValidated = !ans.isValidated;
+                    sess1.saveOrUpdate(ans);
+                    tr1.commit();
+                    sess1.close();
+                    //System.out.println(id);
+                    //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
                 });
                 if(gb.user == null || gb.getUser().RoleId != 2)
                 {
@@ -397,7 +403,8 @@ public class ForumManageController implements Initializable
                     Answer ans12 = new Answer();
                     ans12.Answer = tarea.getText();
 
-                    ans12.isValidated = true;
+                    //ans12.isValidated = true;
+                    
                     Session sess = dbCon.getSession();
                     ans12.user = (User) sess.get(User.class, 3);
                     ans12.question = (Question) sess.get(Question.class, qid);
