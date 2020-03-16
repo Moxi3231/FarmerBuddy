@@ -54,5 +54,9 @@ Contributor(s):
     <mapping class="fb_classes.Answer"/>
     <mapping class="fb_classes.Question"/>
     <mapping class="fb_classes.QuestionCategory"/>
+    <mapping class="fb_classes.Fertilizer"/>
+    <mapping class="fb_classes.Crop"/>
+    <mapping class="fb_classes.CropPrice"/>
+    <mapping class="fb_classes.FertilizerPrice"/>
   </session-factory>
 </hibernate-configuration>

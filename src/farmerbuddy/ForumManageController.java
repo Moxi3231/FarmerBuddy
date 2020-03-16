@@ -102,6 +102,7 @@ public class ForumManageController implements Initializable
     {
     }
 
+    @FXML
     public void expandQuestion()
     {
         try
@@ -222,6 +223,7 @@ public class ForumManageController implements Initializable
         listView.setExpanded(true);
     }
      */
+    @FXML
     public void addQuestion()
     {
 
@@ -309,6 +311,7 @@ public class ForumManageController implements Initializable
         //System.out.println(generatedString);
     }
 
+    @FXML
     public void viewDetailsOnClick()
     {
         try

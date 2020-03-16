@@ -5,3 +5,28 @@
 .mainFxmlClass {
 
 }
+.deleteBtn{
+    -fx-background-color:darkslategrey;
+    
+}
+.button {
+    
+    -fx-text-fill: white;
+    -fx-wrap-text: true;
+    -fx-font-size:13px;
+    -fx-font-weight: bold;
+    -fx-background-color:#8274cd;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    
+
+}
+.button:hover {
+    -fx-background-color: #8274df;
+}
+.hb{
+    -fx-background-color: #0B97EE;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6),5,0.0,0,1);
+}
+.shadowHBOX{
+     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6),5,0.0,0,1);
+}

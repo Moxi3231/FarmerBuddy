@@ -22,8 +22,8 @@ public class Fertilizer
     public int phosphorous;
     public int potassium;
     public String fDescription;
-    public List<String> Regions;
-    public List<String> Soils;
+    public String[] Regions;
+    public String[] Soils;
     
     @OneToOne
     public FertilizerPrice fertilizerPrice;
@@ -104,22 +104,22 @@ public class Fertilizer
         this.fDescription = fDescription;
     }
 
-    public List<String> getRegions()
+    public String[] getRegions()
     {
         return Regions;
     }
 
-    public void setRegions(List<String> Regions)
+    public void setRegions(String[] Regions)
     {
         this.Regions = Regions;
     }
 
-    public List<String> getSoils()
+    public String[] getSoils()
     {
         return Soils;
     }
 
-    public void setSoils(List<String> Soils)
+    public void setSoils(String[] Soils)
     {
         this.Soils = Soils;
     }

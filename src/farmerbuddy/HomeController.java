@@ -5,6 +5,7 @@
  */
 package farmerbuddy;
 
+import com.jfoenix.controls.JFXTabPane;
 import com.jfoenix.controls.JFXTextArea;
 import java.io.IOException;
 import java.net.URL;
@@ -14,6 +15,7 @@ import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -25,8 +27,6 @@ public class HomeController implements Initializable {
 
     private Global gb = Global.getGlobal();
     @FXML
-    private JFXTextArea textRA;
-    @FXML
     private AnchorPane HomeAnchorPane;
     @FXML
     private AnchorPane ForumAnchorPane;
@@ -34,12 +34,32 @@ public class HomeController implements Initializable {
     private AnchorPane CropsAnchorPane;
     @FXML
     private AnchorPane FertilizerAnchorPane;
+    @FXML
+    private Tab addCrop;
+    @FXML
+    private Tab addFertilizer;
+    @FXML
+    private JFXTabPane mainTab;
+    @FXML
+    private AnchorPane addCropAnchorPane;
+    @FXML
+    private AnchorPane addFertilizerAnchorPane;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        if (gb.user == null || gb.user.RoleId != 2) {
+            mainTab.getTabs().remove(addCrop);
+            mainTab.getTabs().remove(addFertilizer);
+        } else {
+            
+            //changeToAddFertilizer();
+            addPane(addFertilizerAnchorPane, "AddFertilizer.fxml");
+            //changeToAddCrop();
+            addPane(addCropAnchorPane,"AddCrop.fxml");
+        }
         /*  try {
             // TODO
            // AnchorPane root = FXMLLoader.load(getClass().getResource("HomeMain.fxml"));
@@ -53,53 +73,18 @@ public class HomeController implements Initializable {
         }
          */
         //textRA.setText(gb.user.toString());
-        changeToForum();
-        //changeToCrops();
-        //changeToFertilizer();
+        addPane(ForumAnchorPane,"ForumManage.fxml");
+        addPane(CropsAnchorPane,"CropManager.fxml");
+        addPane(FertilizerAnchorPane,"FertilizersManager.fxml");
+        //        changeToFertilizer();
         //changeToHome();
     }
-
-    public void changeToForum() {
-        try {
+    public void addPane(AnchorPane pane,String s)
+    {
+          try {
             // TODO
-            AnchorPane root = FXMLLoader.load(getClass().getResource("ForumManage.fxml"));
-            ForumAnchorPane.getChildren().setAll(root);
-        } catch (IOException ex) {
-            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception e) {
-            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, e);
-        }
-    }
-
-    public void changeToHome() {
-        try {
-            // TODO
-            AnchorPane root = FXMLLoader.load(getClass().getResource("HomeMain.fxml"));
-            HomeAnchorPane.getChildren().setAll(root);
-        } catch (IOException ex) {
-            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception e) {
-            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, e);
-        }
-    }
-
-    public void changeToCrops() {
-        try {
-            // TODO
-            AnchorPane root = FXMLLoader.load(getClass().getResource("CropMain.fxml"));
-            CropsAnchorPane.getChildren().setAll(root);
-        } catch (IOException ex) {
-            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception e) {
-            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, e);
-        }
-    }
-
-    public void changeToFertilizer() {
-        try {
-            // TODO
-            AnchorPane root = FXMLLoader.load(getClass().getResource("FertilizerMain.fxml"));
-            FertilizerAnchorPane.getChildren().setAll(root);
+            AnchorPane root = FXMLLoader.load(getClass().getResource(s));
+            pane.getChildren().setAll(root);
         } catch (IOException ex) {
             Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception e) {

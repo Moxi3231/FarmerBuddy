@@ -20,8 +20,8 @@ public class Crop
     
     public String CropName;
     public String CropType;
-    public List<String> Soils;
-    public List<String> Regions;
+    public String[] Soils;
+    public String[] Regions;
     public int Rainfall;
     public int Temperature;
     public String Description;
@@ -76,22 +76,22 @@ public class Crop
         this.CropType = CropType;
     }
 
-    public List<String> getSoils()
+    public String[] getSoils()
     {
         return Soils;
     }
 
-    public void setSoils(List<String> Soils)
+    public void setSoils(String[] Soils)
     {
         this.Soils = Soils;
     }
 
-    public List<String> getRegions()
+    public String[] getRegions()
     {
         return Regions;
     }
 
-    public void setRegions(List<String> Regions)
+    public void setRegions(String[] Regions)
     {
         this.Regions = Regions;
     }
