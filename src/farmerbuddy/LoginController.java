@@ -21,6 +21,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import com.jfoenix.controls.*;
+import com.jfoenix.controls.JFXSnackbar.SnackbarEvent;
+import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
 /**
  * FXML Controller class
@@ -32,10 +36,10 @@ public class LoginController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    private DBContext dbCon = DBContext.getDbContext();
+    private final DBContext dbCon = DBContext.getDbContext();
     @FXML
     private JFXTextField email;
-
+    private final Global gb = Global.getGlobal();
     @FXML
     private JFXPasswordField password;
     @FXML
@@ -43,6 +47,7 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        gb.getDictionary().put("rootPane",rootPane);
         // TODO
         /*    try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -73,11 +78,12 @@ public class LoginController implements Initializable {
                     .setString("email", u.Email).setString("pass", u.Password)
                     .uniqueResult();
             if (temp == null) {
+               gb.showMessage("Invalid Credentials");
                 return;
             }
             //User temp =(User) sess.get(User.class,  u);
             //System.out.println(temp);
-            Global gb = Global.getGlobal();
+            
             gb.user = temp;
             changeToHome();
         } catch (Exception e) {
@@ -92,7 +98,8 @@ public class LoginController implements Initializable {
             //Stage s=(Stage)rootPane.getScene().getWindow();
             //rootPane.ma 
             rootPane.getChildren().setAll(root);
-            
+            if(gb.user!=null)
+                gb.showMessage("Welcome "+gb.user.UserName);
 //System.out.print("Adsdasdasdad");
             // s.setMaximized(true);
         } catch (IOException ex) {

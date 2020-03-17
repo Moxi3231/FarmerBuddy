@@ -19,7 +19,7 @@ import org.hibernate.Transaction;
  * @author moxan
  */
 public class FarmerBuddy extends Application {
-
+    
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
@@ -33,6 +33,14 @@ public class FarmerBuddy extends Application {
 
     }
 
+    @Override
+    public void stop() throws Exception {
+       
+        super.stop(); //To change body of generated methods, choose Tools | Templates.
+        DBContext.getDbContext().close();
+        System.exit(0);
+    }
+   
     /**
      * @param args the command line arguments
      */

@@ -39,8 +39,6 @@ public class RegistrationController implements Initializable {
     private JFXTextField name;
 
     @FXML
-    private JFXTextArea errorArea;
-    @FXML
     private JFXTextField email;
 
     @FXML
@@ -57,7 +55,7 @@ public class RegistrationController implements Initializable {
 
     @FXML
     private JFXTextField state;
-
+    private Global gb = Global.getGlobal();
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -117,7 +115,8 @@ public class RegistrationController implements Initializable {
         catch(Exception  e)
         {
         System.out.println(e);
-        errorArea.setText("Validation Failed");
+        gb.showMessage("Validation Failed");
+//errorArea.setText("Validation Failed");
 //errorArea.setText(e.toString());
         }
     }

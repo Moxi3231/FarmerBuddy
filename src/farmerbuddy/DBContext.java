@@ -60,7 +60,9 @@ public class DBContext {
     }
     public void close()
     {
+        //this.session.close();
         this.sessionFactory.close();
+        
     }
   /*  Transaction t = session.beginTransaction();
 

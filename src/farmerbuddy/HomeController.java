@@ -50,6 +50,10 @@ public class HomeController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        addPane(FertilizerAnchorPane,"FertilizersManager.fxml");
+        addPane(ForumAnchorPane,"ForumManage.fxml");
+        addPane(CropsAnchorPane,"CropManager.fxml");
         if (gb.user == null || gb.user.RoleId != 2) {
             mainTab.getTabs().remove(addCrop);
             mainTab.getTabs().remove(addFertilizer);
@@ -73,9 +77,7 @@ public class HomeController implements Initializable {
         }
          */
         //textRA.setText(gb.user.toString());
-        addPane(ForumAnchorPane,"ForumManage.fxml");
-        addPane(CropsAnchorPane,"CropManager.fxml");
-        addPane(FertilizerAnchorPane,"FertilizersManager.fxml");
+        
         //        changeToFertilizer();
         //changeToHome();
     }

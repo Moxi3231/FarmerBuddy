@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -41,7 +42,7 @@ public class AddCropController implements Initializable {
     @FXML
     private JFXTextField crop_price;
     @FXML
-    private ListView<?> lfertilizers;
+    private ListView<CheckBox> lfertilizers;
     private List<Fertilizer> fertilizers;
     private DBContext dbCon = DBContext.getDbContext();
     private Global gb =Global.getGlobal();
@@ -51,6 +52,13 @@ public class AddCropController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        fertilizers = (List<Fertilizer>)gb.getDictionary().get("fertilizers_list");
+        for(Fertilizer f:fertilizers)
+        {
+            CheckBox chkTemp = new CheckBox(f.fname);
+            chkTemp.setId("fertilizer"+String.valueOf(f.fertilizerId));
+            lfertilizers.getItems().add(chkTemp);
+        }
     }    
      
 }

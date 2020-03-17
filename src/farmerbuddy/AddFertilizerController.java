@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import fb_classes.*;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.*;
 /**
@@ -38,7 +39,7 @@ public class AddFertilizerController implements Initializable {
     private JFXTextArea fertilizer_regions;
     @FXML
     private JFXButton addFertBtn;
-
+    private Global gb=  Global.getGlobal();
     /**
      * Initializes the controller class.
      */
@@ -55,15 +56,21 @@ public class AddFertilizerController implements Initializable {
         Fertilizer ftemp = getFertilizer();
         if(ftemp!=null)
         {
+            try{
             Session sess = dbCon.getSession();
             Transaction tr = sess.beginTransaction();
             
             //Fertilizer dupF = (Fertilizer) sess.createQuery("select fert from Fertilizer fert where fert.fname= '"+ftemp.fname+"'");
             
             sess.save(ftemp);
+            sess.save(ftemp.fertilizerPrice);
             tr.commit();
+            gb.showMessage("Fertilizer Added");
             dbCon.closeSession();
             dbCon.close();
+        }catch(Exception e){
+        gb.showMessage("Cannot Add This Fertilizer");
+        }
         }
     }
     public Fertilizer getFertilizer()
@@ -76,6 +83,19 @@ public class AddFertilizerController implements Initializable {
         ftemp.phosphorous = Integer.valueOf(fertilizer_P.getText());
         ftemp.potassium = Integer.valueOf(fertilizer_Potassium.getText());
         ftemp.fname = fertilizer_name.getText();
+        String price = fertilizer_price.getText();
+        int tprice = 0;
+        if(price!=null )
+        {
+            tprice = Integer.valueOf(price);
+        }
+        FertilizerPrice fp = new FertilizerPrice();
+        fp.date = new Date();
+        fp.price = tprice;
+        fp.fertilizer = ftemp;
+        
+        ftemp.fertilizerPrice = fp;
+                
         if(validateFetilizer(ftemp))
             return ftemp;
         return null;

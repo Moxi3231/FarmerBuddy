@@ -21,6 +21,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import fb_classes.*;
+import com.jfoenix.controls.*;
 import java.util.LinkedList;
 import java.util.List;
 import org.hibernate.*;
@@ -45,7 +46,7 @@ public class FertilizersManagerController implements Initializable {
         fillFertilizerList();
         if(fertilizers.isEmpty())
             return;
-        
+        gb.getDictionary(). put("fertilizers_list", fertilizers);
         for(Fertilizer ftemp:fertilizers)
         {
              HBox h1 = new HBox();
@@ -60,37 +61,44 @@ public class FertilizersManagerController implements Initializable {
             HBox.setMargin(v2, new Insets(10.0));
             v1.setPrefSize(625, 200);
             v1.setAlignment(Pos.CENTER);
+            
+            
+            
 
             v2.setMinWidth(225);
             v2.setPrefSize(225, 200);
             v2.setAlignment(Pos.CENTER);
 
             Label l = new Label("Fertilizer Name: "+ftemp.fname);
+            double fprice = 0;
+            if(ftemp.fertilizerPrice!=null)
+                fprice = ftemp.fertilizerPrice.price;
+            Label lfprice;
+            lfprice = new Label("Fertilizer Price: "+ String.valueOf(fprice));
+            
             Label l1 = new Label("Contents");
+            lfprice.setStyle("-fx-font-size: 25px;");
             l.setStyle("-fx-font-size: " + 25 + "px;");
             l1.setStyle("-fx-font-size: " + 17 + "px;");
 
             v1.getChildren().add(l);
+            v1.getChildren().add(lfprice);
             v1.getChildren().add(l1);
             v1.setBackground(new Background(new BackgroundFill(Color.DARKSLATEGRAY, CornerRadii.EMPTY, new Insets(10))));
             v2.setBackground(new Background(new BackgroundFill(Color.WHEAT, CornerRadii.EMPTY, new Insets(10))));
             JFXButton update = new JFXButton("Update");
 
             JFXButton del = new JFXButton("Delete");
-            JFXButton app = new JFXButton("View");
-
+            
             del.setButtonType(JFXButton.ButtonType.RAISED);
-            app.setButtonType(JFXButton.ButtonType.RAISED);
             update.setButtonType(JFXButton.ButtonType.RAISED);
 
             update.setPrefSize(115, 35);
             del.setPrefSize(115, 35);
-            app.setPrefSize(115, 35);
-
+            
             v2.getChildren().add(update);
             v2.getChildren().add(del);
-            v2.getChildren().add(app);
-
+            
             h1.getChildren().add(v1);
             h1.getChildren().add(v2);
             addShadowedBox(h1);
@@ -111,10 +119,7 @@ public class FertilizersManagerController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         updateFertilizerList();
-//fertilizers.clear();
-        for (int i = 0; i < 10; i++) {
-           
-        }
+        //fertilizers.clear();
     }    
      private void addShadowedBox(HBox hb) {
 
