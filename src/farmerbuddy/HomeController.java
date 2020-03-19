@@ -17,7 +17,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
-
+import fb_classes.*;
 /**
  * FXML Controller class
  *
@@ -50,11 +50,12 @@ public class HomeController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        gb.getDictionary().put("fertilizerListObserver",new FertilizerListObserver());
+        gb.getDictionary().put("cropListObserver", new CropListObserver());
         addPane(FertilizerAnchorPane,"FertilizersManager.fxml");
         addPane(ForumAnchorPane,"ForumManage.fxml");
         addPane(CropsAnchorPane,"CropManager.fxml");
-        if (gb.user == null || gb.user.RoleId != 2) {
+        if (gb.getUser() == null || !gb.isUserAdmin()) {
             mainTab.getTabs().remove(addCrop);
             mainTab.getTabs().remove(addFertilizer);
         } else {
@@ -64,22 +65,9 @@ public class HomeController implements Initializable {
             //changeToAddCrop();
             addPane(addCropAnchorPane,"AddCrop.fxml");
         }
-        /*  try {
-            // TODO
-           // AnchorPane root = FXMLLoader.load(getClass().getResource("HomeMain.fxml"));
-           // HomeAnchorPane.getChildren().setAll(root);
-        } catch (IOException ex) {
-            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch(Exception e)
-        {
-           Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, e);
-        }
-         */
-        //textRA.setText(gb.user.toString());
         
-        //        changeToFertilizer();
-        //changeToHome();
+        
+     
     }
     public void addPane(AnchorPane pane,String s)
     {

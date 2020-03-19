@@ -16,7 +16,7 @@
       <JFXTextField fx:id="crop_temperature" alignment="CENTER" layoutX="460.0" layoutY="337.0" prefHeight="26.0" prefWidth="283.0" promptText="Enter Temperature In Celcius" />
       <JFXTextArea fx:id="crop_description" layoutX="152.0" layoutY="383.0" prefHeight="26.0" prefWidth="592.0" promptText="Description" />
       <JFXTextField fx:id="crop_price" layoutX="453.0" layoutY="131.0" prefHeight="26.0" prefWidth="283.0" promptText="Crop Price" />
-      <ListView fx:id="lfertilizers" layoutX="152.0" layoutY="432.0" prefHeight="127.0" prefWidth="394.0" />
-      <JFXButton buttonType="RAISED" layoutX="581.0" layoutY="471.0" prefHeight="26.0" prefWidth="166.0" ripplerFill="#20a0c7" style="-fx-background-color: #0ec1af;" text="Add Crop" />
+      <ListView fx:id="lfertilizers" layoutX="152.0" layoutY="432.0" prefHeight="127.0" prefWidth="396.0" style="-fx-background-color: #A9A9F5;" />
+      <JFXButton buttonType="RAISED" layoutX="581.0" layoutY="471.0" onAction="#addCrop" prefHeight="26.0" prefWidth="166.0" ripplerFill="#20a0c7" style="-fx-background-color: #0ec1af;" text="Add Crop" />
    </children>
 </AnchorPane>

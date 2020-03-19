@@ -21,7 +21,8 @@ import javafx.util.Duration;
  */
 public class Global {
 
-    public User user;
+    private User user = null;
+    private boolean isUserAdmin =false;
     private static Global gb;
     //public Dictionary<String,Object> data;
     public static Map<String, Object> data;
@@ -45,12 +46,20 @@ public class Global {
 
     public void setUser(User user) {
         this.user = user;
+        System.out.println(user);
+        System.out.println(user.RoleId);
+        if(user.RoleId == UserRoles.UserAdmin)
+            isUserAdmin = true;
     }
 
     public Map<String, Object> getDictionary() {
         return this.data;
     }
 
+    public boolean isUserAdmin()
+    {
+        return isUserAdmin;
+    }
     public void showMessage(String message) {
         if(!data.containsKey("rootPane"))
             return;

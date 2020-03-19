@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane id="AnchorPane" fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="farmerbuddy.LoginController">
+<AnchorPane id="AnchorPane" fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" stylesheets="@../StyleSheet/Style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="farmerbuddy.LoginController">
     <children>
-      <Pane layoutY="2.0" prefHeight="594.0" prefWidth="900.0" style="-fx-background-color: #ffffff;" styleClass="loginPane" stylesheets="@../StyleSheet/Style.css">
+      <Pane layoutY="2.0" prefHeight="594.0" prefWidth="900.0" style="-fx-background-color: #ffffff;" styleClass="loginPane">
          <children>
             <JFXTextField fx:id="email" labelFloat="true" layoutX="294.0" layoutY="87.0" prefHeight="25.0" prefWidth="313.0" promptText="Email" />
             <Pane layoutX="295.0" layoutY="271.0" prefHeight="296.0" prefWidth="313.0" stylesheets="@../StyleSheet/Style.css">

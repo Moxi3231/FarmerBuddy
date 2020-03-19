@@ -13,7 +13,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
+import fb_classes.*;
 /**
  *
  * @author moxan
@@ -55,8 +55,8 @@ public class FarmerBuddy extends Application {
         try {
             User_Role ur = new User_Role("Admin");
             User_Role ur1 = new User_Role("Farmer");
-            ur.RoleId = 2;
-            ur1.RoleId = 1;
+            ur.RoleId = UserRoles.UserAdmin;
+            ur1.RoleId = UserRoles.UserNormal;
             DBContext db = DBContext.getDbContext();
             Session sess = db.getSession();
             Transaction tr = sess.beginTransaction();

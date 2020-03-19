@@ -26,7 +26,7 @@ public class Crop
     public int Temperature;
     public String Description;
  
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     public CropPrice cropPrice;
     
     @ManyToMany
@@ -34,6 +34,7 @@ public class Crop
 
     public Crop()
     {
+        this.fertilizers = new LinkedList<>();
     }
 
     public int getCropId()

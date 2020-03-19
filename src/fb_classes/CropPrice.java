@@ -17,7 +17,7 @@ public class CropPrice
     @GeneratedValue(strategy =  GenerationType.AUTO)
     public int CPId;
     
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     public Crop crop;
     
     public double price;

@@ -173,7 +173,7 @@ public class ForumManageController implements Initializable
                     //System.out.println(id);
                     //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
                 });
-                if(gb.user == null || gb.getUser().RoleId != 2)
+                if(gb.getUser() == null || gb.getUser().RoleId != 2)
                 {
                     tbtn.setDisable(true);
                 }
@@ -321,6 +321,7 @@ public class ForumManageController implements Initializable
             Label l = listView.getSelectionModel().getSelectedItem();
             if (l == null)
             {
+                gb.showMessage("Please select a question!!!");
                 return;
             }
             JFXDialogLayout content = new JFXDialogLayout();

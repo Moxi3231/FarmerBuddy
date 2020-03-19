@@ -25,14 +25,16 @@ public class Fertilizer
     public String[] Regions;
     public String[] Soils;
     
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     public FertilizerPrice fertilizerPrice;
     
     @ManyToMany
     public List<Crop> crops;
     
     
-    public Fertilizer(){}
+    public Fertilizer(){
+        this.crops = new LinkedList<>();
+    }
 
     public FertilizerPrice getFertilizerPrice()
     {

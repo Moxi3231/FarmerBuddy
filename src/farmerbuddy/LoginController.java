@@ -84,7 +84,7 @@ public class LoginController implements Initializable {
             //User temp =(User) sess.get(User.class,  u);
             //System.out.println(temp);
             
-            gb.user = temp;
+            gb.setUser(temp);
             changeToHome();
         } catch (Exception e) {
             System.out.println(e);
@@ -98,8 +98,8 @@ public class LoginController implements Initializable {
             //Stage s=(Stage)rootPane.getScene().getWindow();
             //rootPane.ma 
             rootPane.getChildren().setAll(root);
-            if(gb.user!=null)
-                gb.showMessage("Welcome "+gb.user.UserName);
+            if(gb.getUser()!=null)
+                gb.showMessage("Welcome "+gb.getUser().UserName);
 //System.out.print("Adsdasdasdad");
             // s.setMaximized(true);
         } catch (IOException ex) {

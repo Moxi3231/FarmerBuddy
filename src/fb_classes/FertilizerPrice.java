@@ -17,7 +17,7 @@ public class FertilizerPrice
     @GeneratedValue(strategy =  GenerationType.AUTO)
     public int FPId;
     
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     public Fertilizer fertilizer;
     
     public double price;
