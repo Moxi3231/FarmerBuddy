@@ -66,6 +66,7 @@ public class CropManagerController implements Initializable {
         {
             cropListObserver = (CropListObserver) gb.getDictionary().get("cropListObserver");
             cropListObserver.setVerticalBox(vboxCropManager);
+            cropListObserver.setAnchorPane(CropAnchorPaneM);
             cropListObserver.updateCrop();
         }
         

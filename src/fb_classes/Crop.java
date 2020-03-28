@@ -29,7 +29,7 @@ public class Crop
     @OneToOne(cascade = CascadeType.ALL)
     public CropPrice cropPrice;
     
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
     public List<Fertilizer> fertilizers;
 
     public Crop()

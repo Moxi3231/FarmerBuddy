@@ -69,6 +69,11 @@ public class LoginController implements Initializable {
     public void login() {
         try {
             Session sess = dbCon.getSession();
+            if(email.getText()==null || password.getText()==null)
+            {
+                gb.showMessage("Please Enter Valid Credentials");
+                return;
+            }
             User u = new User();
             u.Email = email.getText();
             u.Password = password.getText();
@@ -88,6 +93,7 @@ public class LoginController implements Initializable {
             changeToHome();
         } catch (Exception e) {
             System.out.println(e);
+            gb.showMessage("Please Try Again");
         }
     }
 

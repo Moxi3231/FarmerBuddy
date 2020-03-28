@@ -24,6 +24,7 @@ import fb_classes.*;
 import com.jfoenix.controls.*;
 import java.util.LinkedList;
 import java.util.List;
+import javafx.scene.layout.AnchorPane;
 import org.hibernate.*;
 
 /**
@@ -39,6 +40,8 @@ public class FertilizersManagerController implements Initializable {
     private Global gb = Global.getGlobal();
     private DBContext dbCon = DBContext.getDbContext();
     private FertilizerListObserver fertilizerListObserver;
+    @FXML
+    private AnchorPane fertilizerManager;
 
     /**
      * Initializes the controller class.
@@ -50,8 +53,13 @@ public class FertilizersManagerController implements Initializable {
         if (gb.getDictionary().containsKey("fertilizerListObserver")) {
             fertilizerListObserver = (FertilizerListObserver) gb.getDictionary().get("fertilizerListObserver");
             fertilizerListObserver.setVerticalBox(vboxFertilizersManager);
+            fertilizerListObserver.setAnchorPane(fertilizerManager);
             fertilizerListObserver.updateFertilizers();
         }
+        if(gb.getDictionary().containsKey("cropListObserver"))
+        {
+            fertilizerListObserver.setCropObserverList((CropListObserver) gb.getDictionary().get("cropListObserver"));
+            }
     }
 
 }

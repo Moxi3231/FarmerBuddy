@@ -5,14 +5,35 @@ and open the template in the editor.
 */
 /* 
     Created on : Mar 3, 2020, 8:12:51 PM
-    Author     : moxan
+    Author     : moxanmoxank
 */
-
+.bgCrop{
+    -fx-background-image: url(Crop.jpg);
+    -fx-opacity: 0.9;
+    -fx-background-size: 100%;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-color: #fef7e5;
+}
+.bgFertilizer{
+    -fx-background-image: url(Fertilizer.jpg);
+    -fx-opacity: 0.9;
+    -fx-background-size: 100%;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-color: #fef7e5;
+}
+.paddingForChild > *{
+    -fx-padding: 10;
+   -fx-background-color:aliceblue;
+   -fx-opacity: 0.9;
+}
 .jfx-list-view{
+  
     -fx-vertical-gap: 10;
     -fx-cell-vertical-margin: 10.0;
     -fx-background-insets: 0;
-
+   
 }
 .jfx-list-cell{
     -fx-padding:10;
