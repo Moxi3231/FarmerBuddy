@@ -44,6 +44,7 @@ public class FertilizerListObserver {
 
     private List<Fertilizer> fertilizers = null;
     public VBox verticalBox = null;
+    private ListView<CheckBox> lfertilizerU = null;
     //public 
     private AnchorPane anchorPane = null;
     private DBContext dbCon = DBContext.getDbContext();
@@ -63,11 +64,15 @@ public class FertilizerListObserver {
     public void setCropObserverList(CropListObserver clo)
     {
         this.cropListObserver = clo;
+        clo.setFertilizerObserverList(this);
     }
     public void setAnchorPane(AnchorPane ap) {
         this.anchorPane = ap;
     }
-
+    private List<Fertilizer> getFList()
+    {
+        return fertilizers;
+    }
     private void updateCheckBox() {
         if (fertilizers == null) {
             return;
@@ -75,7 +80,9 @@ public class FertilizerListObserver {
         if (lfertilizers == null) {
             return;
         }
+        
         lfertilizers.getItems().clear();
+        
         fertilizers.stream().map((f) -> {
             CheckBox chkTemp = new CheckBox(f.fname);
             chkTemp.setId("fertilizer" + String.valueOf(f.fertilizerId));
@@ -84,7 +91,7 @@ public class FertilizerListObserver {
             lfertilizers.getItems().add(chkTemp);
         });
     }
-
+    
     public VBox getVerticalBox() {
         return verticalBox;
     }

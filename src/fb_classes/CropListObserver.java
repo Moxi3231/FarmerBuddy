@@ -10,6 +10,7 @@ import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXMasonryPane;
 import com.jfoenix.controls.JFXTextArea;
+import com.jfoenix.controls.JFXTextField;
 import java.util.List;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -22,6 +23,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import farmerbuddy.*;
+import java.util.Date;
 import java.util.LinkedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -47,6 +49,11 @@ public class CropListObserver {
     private DBContext dbCon = DBContext.getDbContext();
     private Global gbGlobal = Global.getGlobal();
     private AnchorPane anchorPane = null;
+    private FertilizerListObserver fertilizerListObserver = null;
+
+    public void setFertilizerObserverList(FertilizerListObserver flo) {
+        this.fertilizerListObserver = flo;
+    }
 
     public void setVerticalBox(VBox verticalBox) {
         this.verticalBox = verticalBox;
@@ -59,8 +66,9 @@ public class CropListObserver {
 
     private void fillCropList() {
         try {
-            if(crops!=null)
+            if (crops != null) {
                 crops.clear();
+            }
             Session sess = dbCon.getSession();
             Transaction tr = sess.beginTransaction();
             crops = sess.createQuery("select cr from Crop cr").list();
@@ -171,6 +179,9 @@ public class CropListObserver {
             app.setButtonType(JFXButton.ButtonType.RAISED);
             update.setButtonType(JFXButton.ButtonType.RAISED);
             update.setPrefSize(115, 35);
+            update.setOnAction((ActionEvent) -> {
+                showUpdateView(cr);
+            });
             del.setPrefSize(115, 35);
             app.setPrefSize(115, 35);
             if (gbGlobal.isUserAdmin()) {
@@ -223,7 +234,7 @@ public class CropListObserver {
         content.getStyleClass().add("bgCrop");
         StackPane stackPane = new StackPane();
         stackPane.autosize();
-        HBox title = new HBox(new Text("Crop: " + cr.CropName),bText("\t\t\t\t\t\t\tPrice: "),new Text(String.valueOf(cr.getCropPrice().price)));
+        HBox title = new HBox(new Text("Crop: " + cr.CropName), bText("\t\t\t\t\t\t\tPrice: "), new Text(String.valueOf(cr.getCropPrice().price)));
         content.setHeading(title);
         //content.setBody(new Label("Question Details"));
 
@@ -262,7 +273,7 @@ public class CropListObserver {
             HBox htemp = new HBox();
             Text fname = new Text(f.fname);
             htemp.getChildren().add(fname);
-            htemp.getChildren().addAll(bText("\t "+String.valueOf(f.Nitrogen)+"% "+String.valueOf(f.phosphorous)+"% "+String.valueOf(f.potassium)+"% "));
+            htemp.getChildren().addAll(bText("\t " + String.valueOf(f.Nitrogen) + "% " + String.valueOf(f.phosphorous) + "% " + String.valueOf(f.potassium) + "% "));
             return htemp;
         }).forEachOrdered((htemp) -> {
             fertilizers.getChildren().add(htemp);
@@ -290,7 +301,109 @@ public class CropListObserver {
 
         dialog.show();
     }
-    
+
+    private void showUpdateView(Crop cr) {
+        if (anchorPane == null) {
+            return;
+        }
+        if (cr == null) {
+            gbGlobal.showMessage("Cannot Update this Crop");
+            return;
+        }
+        JFXDialogLayout content = new JFXDialogLayout();
+        content.getStyleClass().add("bgCrop");
+        StackPane stackPane = new StackPane();
+        stackPane.autosize();
+        HBox title = new HBox(bText("Update Crop"));
+        content.setHeading(title);
+        //content.setBody(new Label("Question Details"));
+
+        AnchorPane an1 = new AnchorPane();
+        an1.getStyleClass().add("paddingForChild");
+        an1.setPrefSize(825, 400);
+        an1.setMinSize(825, 400);
+
+        VBox vb1 = new VBox();
+
+        JFXTextField cname = new JFXTextField(cr.CropName);
+        cname.setPromptText("Name of Crop");
+        JFXTextField ctype = new JFXTextField(cr.CropType);
+        ctype.setPromptText("Type of Crop");
+
+        JFXTextField crainfall = new JFXTextField(String.valueOf(cr.Rainfall));
+        crainfall.setPromptText("Content of Nitrogen in %");
+        JFXTextField cprice = new JFXTextField(String.valueOf(cr.getCropPrice().price));
+        cprice.setPromptText("Enter price of fertilizer");
+        JFXTextField ctemperature = new JFXTextField(String.valueOf(cr.Temperature));
+        ctemperature.setPromptText("Enter price of fertilizer");
+        JFXTextArea fdescripition = new JFXTextArea(cr.Description);
+
+        String soi = "";
+        for (String s : cr.Soils) {
+            soi += s + ",";
+        }
+        JFXTextArea soils = new JFXTextArea(soi);
+
+        String reg = "";
+        for (String r : cr.Regions) {
+            reg += r + ",";
+        }
+        JFXTextArea regions = new JFXTextArea(reg);
+
+        //rtemp.getStyleClass().add("paddingForChild");
+        setWidthForTextArea(fdescripition);
+        setWidthForTextArea(soils);
+        setWidthForTextArea(regions);
+        HBox rt = new HBox(crainfall, ctemperature);
+        HBox dsf = new HBox(fdescripition, soils, regions);
+        dsf.getStyleClass().add("paddingForChild");
+        vb1.getChildren().addAll(cname, ctype, rt, dsf);
+        an1.getChildren().addAll(vb1);
+        content.setBody(an1);
+
+        JFXDialog dialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
+        JFXButton updateBtn = new JFXButton("Update");
+        JFXButton closeBtn = new JFXButton("Close");
+        updateBtn.setOnAction((ActionEvent event) -> {
+            gbGlobal.showMessage("Updating Fertilizer");
+
+            try {
+                //Fertilizer ftemp = new Fertilizer();
+                /* if(isValidNumber(nnitr))
+                    .Nitrogen = Integer.valueOf(nnitr.getText());
+                else
+                {
+                    gbGlobal.showMessage("Enter Valid Value for Nitrogen");
+                    return;
+                }
+                
+/*
+                Session sess = dbCon.getSession();
+                Transaction tr = sess.beginTransaction();
+                sess.saveOrUpdate(fert);
+                sess.saveOrUpdate(fert.fertilizerPrice);
+                tr.commit();
+                dbCon.closeSession();
+                dialog.close();
+                gbGlobal.showMessage("Fertilizer Updated");
+                updateCrop();
+                 */            } catch (Exception e) {
+                gbGlobal.showMessage("Couldn't update fertilizer. Please try again later.");
+                System.err.println(e);
+            }
+        });
+        closeBtn.setOnAction((ActionEvent event) -> {
+            dialog.close();
+        });
+
+        anchorPane.getChildren().add(stackPane);
+        content.setActions(updateBtn, closeBtn);
+        AnchorPane.setTopAnchor(stackPane, Double.valueOf(10));
+        AnchorPane.setLeftAnchor(stackPane, Double.valueOf(8));
+
+        dialog.show();
+    }
+
     private DropShadow getDropShadow() {
         DropShadow e = new DropShadow();
         e.setWidth(10);
@@ -300,5 +413,23 @@ public class CropListObserver {
         e.setRadius(2);
         e.setColor(Color.DODGERBLUE);
         return e;
+    }
+
+    private void setWidthForTextArea(JFXTextArea tarea) {
+        tarea.setPrefSize(250, 100);
+        tarea.setMinSize(250, 100);
+    }
+
+    private boolean isValidNumber(JFXTextField s) {
+        if (s.getText() == null) {
+            return false;
+        }
+        for (char c : s.getText().toCharArray()) {
+            if (!Character.isDigit(c)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

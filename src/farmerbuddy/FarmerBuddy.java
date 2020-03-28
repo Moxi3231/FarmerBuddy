@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import fb_classes.*;
+import javafx.scene.image.Image;
 /**
  *
  * @author moxan
@@ -21,16 +22,23 @@ import fb_classes.*;
 public class FarmerBuddy extends Application {
     
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
+        try{
         Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
 
         Scene scene = new Scene(root, 900, 600);
-
+        
         stage.setScene(scene);
         stage.setResizable(false);
         stage.setMaximized(false);
+        stage.setTitle("Farmer-Buddy");
+        //stage.getIcons().add(new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTIMGHFTC-QZllL53Fsm7_UoNRs7PTZkDczxMRbe2djRD-ya619"));
+        stage.getIcons().add(new Image(getClass().getResource("fbuddy.jfif").toString()));
         stage.show();
-
+        }catch(Exception e)
+        {
+            System.err.println(e);
+        }
     }
 
     @Override
