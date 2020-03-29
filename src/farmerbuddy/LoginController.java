@@ -33,6 +33,9 @@ import javafx.util.Duration;
  * FXML Controller class
  *
  * @author moxan
+ *
+ * 
+ *  Login Class
  */
 public class LoginController implements Initializable {
 

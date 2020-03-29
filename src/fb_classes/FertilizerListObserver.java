@@ -8,6 +8,7 @@ package fb_classes;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
+import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXMasonryPane;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
@@ -44,12 +45,12 @@ public class FertilizerListObserver {
 
     private List<Fertilizer> fertilizers = null;
     public VBox verticalBox = null;
-    private ListView<CheckBox> lfertilizerU = null;
+    private JFXListView<CheckBox> lfertilizerU = null;
     //public 
     private AnchorPane anchorPane = null;
     private DBContext dbCon = DBContext.getDbContext();
     private Global gb = Global.getGlobal();
-    private ListView<CheckBox> lfertilizers = null;
+    private JFXListView<CheckBox> lfertilizers = null;
     private CropListObserver cropListObserver = null;
 
     public void updateFertilizers() {
@@ -98,11 +99,11 @@ public class FertilizerListObserver {
         return verticalBox;
     }
 
-    public ListView<CheckBox> getLfertilizers() {
+    public JFXListView<CheckBox> getLfertilizers() {
         return lfertilizers;
     }
 
-    public void setLfertilizers(ListView<CheckBox> lfertilizers) {
+    public void setLfertilizers(JFXListView<CheckBox> lfertilizers) {
         this.lfertilizers = lfertilizers;
     }
 

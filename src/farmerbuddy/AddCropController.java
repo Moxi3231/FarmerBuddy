@@ -5,6 +5,7 @@
  */
 package farmerbuddy;
 
+import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import fb_classes.Fertilizer;
@@ -44,7 +45,7 @@ public class AddCropController implements Initializable {
     @FXML
     private JFXTextField crop_price;
     @FXML
-    private ListView<CheckBox> lfertilizers;
+    private JFXListView<CheckBox> lfertilizers;
 
     private FertilizerListObserver fertilizerListObserver;
     private DBContext dbCon = DBContext.getDbContext();
