@@ -23,6 +23,9 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.JFXSnackbar.SnackbarEvent;
+import de.jensd.fx.glyphs.GlyphIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
@@ -47,7 +50,7 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        gb.getDictionary().put("rootPane",rootPane);
+        gb.getDictionary().put("rootPane", rootPane);
         // TODO
         /*    try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -69,8 +72,7 @@ public class LoginController implements Initializable {
     public void login() {
         try {
             Session sess = dbCon.getSession();
-            if(email.getText()==null || password.getText()==null)
-            {
+            if (email.getText() == null || password.getText() == null) {
                 gb.showMessage("Please Enter Valid Credentials");
                 return;
             }
@@ -83,12 +85,12 @@ public class LoginController implements Initializable {
                     .setString("email", u.Email).setString("pass", u.Password)
                     .uniqueResult();
             if (temp == null) {
-               gb.showMessage("Invalid Credentials");
+                gb.showMessage("Invalid Credentials");
                 return;
             }
             //User temp =(User) sess.get(User.class,  u);
             //System.out.println(temp);
-            
+
             gb.setUser(temp);
             changeToHome();
         } catch (Exception e) {
@@ -101,13 +103,10 @@ public class LoginController implements Initializable {
         AnchorPane root;
         try {
             root = FXMLLoader.load(getClass().getResource("Home.fxml"));
-            //Stage s=(Stage)rootPane.getScene().getWindow();
-            //rootPane.ma 
             rootPane.getChildren().setAll(root);
-            if(gb.getUser()!=null)
-                gb.showMessage("Welcome "+gb.getUser().UserName);
-//System.out.print("Adsdasdasdad");
-            // s.setMaximized(true);
+            if (gb.getUser() != null) {
+                gb.showMessage("Welcome " + gb.getUser().UserName);
+            }
         } catch (IOException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }

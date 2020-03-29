@@ -8,6 +8,8 @@ package farmerbuddy;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -15,6 +17,7 @@ import javafx.fxml.Initializable;
 import fb_classes.*;
 import java.util.Date;
 import java.util.List;
+import javafx.scene.text.Text;
 import org.hibernate.*;
 
 /**
@@ -52,6 +55,7 @@ public class AddFertilizerController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        
         if(gb.getDictionary().containsKey("fertilizerListObserver"))
         {
             fertilizerListObserver = (FertilizerListObserver) gb.getDictionary().get("fertilizerListObserver");
