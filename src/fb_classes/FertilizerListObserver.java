@@ -50,29 +50,31 @@ public class FertilizerListObserver {
     private DBContext dbCon = DBContext.getDbContext();
     private Global gb = Global.getGlobal();
     private ListView<CheckBox> lfertilizers = null;
-    private CropListObserver cropListObserver=null;
+    private CropListObserver cropListObserver = null;
+
     public void updateFertilizers() {
         fillFertilizerList();
         updateFertilizerList();
         updateCheckBox();
-        if(cropListObserver!=null)
-        {//System.out.println("Isnt null");
+        if (cropListObserver != null) {//System.out.println("Isnt null");
             cropListObserver.updateCrop();
         }
         //System.out.println("fb_classes.FertilizerListObserver.updateFertilizerList()");
     }
-    public void setCropObserverList(CropListObserver clo)
-    {
+
+    public void setCropObserverList(CropListObserver clo) {
         this.cropListObserver = clo;
         clo.setFertilizerObserverList(this);
     }
+
     public void setAnchorPane(AnchorPane ap) {
         this.anchorPane = ap;
     }
-    private List<Fertilizer> getFList()
-    {
+
+    public List<Fertilizer> getFList() {
         return fertilizers;
     }
+
     private void updateCheckBox() {
         if (fertilizers == null) {
             return;
@@ -80,18 +82,18 @@ public class FertilizerListObserver {
         if (lfertilizers == null) {
             return;
         }
-        
+
         lfertilizers.getItems().clear();
-        
+
         fertilizers.stream().map((f) -> {
-            CheckBox chkTemp = new CheckBox(f.fname);
+            CheckBox chkTemp = new CheckBox(getFertilizerString(f));
             chkTemp.setId("fertilizer" + String.valueOf(f.fertilizerId));
             return chkTemp;
         }).forEachOrdered((chkTemp) -> {
             lfertilizers.getItems().add(chkTemp);
         });
     }
-    
+
     public VBox getVerticalBox() {
         return verticalBox;
     }
@@ -138,13 +140,16 @@ public class FertilizerListObserver {
             v1.getChildren().add(l);
             v1.getChildren().add(lfprice);
             HBox hb1 = new HBox();
-            hb1.getChildren().addAll(bText("N: "+String.valueOf(ftemp.Nitrogen)+"% "),bText("P: "+String.valueOf(ftemp.phosphorous)+"% "),bText("K: "+ftemp.potassium+"% "));
+            hb1.getChildren().addAll(bText("N: " + String.valueOf(ftemp.Nitrogen) + "% "), bText("P: " + String.valueOf(ftemp.phosphorous) + "% "), bText("K: " + ftemp.potassium + "% "));
             hb1.setAlignment(Pos.CENTER);
-            v1.getChildren().add(hb1);
+            VBox v1temp = new VBox(bText("Descripition: "),new Label(ftemp.fDescription));
+            v1temp.setAlignment(Pos.CENTER);
+            v1.getChildren().addAll(hb1,v1temp);
+            
             v1.setAlignment(Pos.CENTER);
             v1.setBackground(new Background(new BackgroundFill(Color.DARKSLATEGRAY, CornerRadii.EMPTY, new Insets(10))));
             v1.setStyle("-fx-background-color:#C2FEDA;");
-
+            
             if (gb.isUserAdmin()) {
                 v1.setPrefSize(625, 200);
                 HBox.setMargin(v2, new Insets(10.0));
@@ -253,19 +258,19 @@ public class FertilizerListObserver {
         fprice.setPromptText("Enter price of fertilizer");
 
         JFXTextArea fdescripition = new JFXTextArea(fert.fDescription);
-
+        fdescripition.setPromptText("Description");
         String soi = "";
         for (String s : fert.Soils) {
             soi += s + ",";
         }
         JFXTextArea soils = new JFXTextArea(soi);
-
+        soils.setPromptText("Enter Soils Sepparated By Comma");
         String reg = "";
         for (String r : fert.Regions) {
             reg += r + ",";
         }
         JFXTextArea regions = new JFXTextArea(reg);
-
+        regions.setPromptText("Enter Region Separated By Comma");
         HBox rtemp = new HBox(ph, pots, nnitr);
         vb1.getChildren().addAll(new HBox(fname), rtemp, new HBox(fprice));
         rtemp.getStyleClass().add("paddingForChild");
@@ -288,10 +293,9 @@ public class FertilizerListObserver {
 
             try {
                 //Fertilizer ftemp = new Fertilizer();
-                if(isValidNumber(nnitr))
+                if (isValidNumber(nnitr)) {
                     fert.Nitrogen = Integer.valueOf(nnitr.getText());
-                else
-                {
+                } else {
                     gb.showMessage("Enter Valid Value for Nitrogen");
                     return;
                 }
@@ -329,18 +333,20 @@ public class FertilizerListObserver {
 
         dialog.show();
     }
-    private boolean isValidNumber(JFXTextField s)
-    {
-       if(s.getText()==null)
-           return false;
-       for(char c:s.getText().toCharArray())
-       {
-           if(!Character.isDigit(c))
-               return false;
-       }
-       
-       return true;
+
+    private boolean isValidNumber(JFXTextField s) {
+        if (s.getText() == null) {
+            return false;
+        }
+        for (char c : s.getText().toCharArray()) {
+            if (!Character.isDigit(c)) {
+                return false;
+            }
+        }
+
+        return true;
     }
+
     private void setWidthForTextArea(JFXTextArea tarea) {
         tarea.setPrefSize(250, 100);
         tarea.setMinSize(250, 100);
@@ -355,7 +361,10 @@ public class FertilizerListObserver {
         dbCon.closeSession();
         gb.getDictionary().put("fertilizers_list", fertilizers);
     }
-
+    private String getFertilizerString(Fertilizer f)
+    {
+         return String.format("%s \tRatio(N: %d  P: %d  K: %d  ) ", f.fname,f.Nitrogen,f.phosphorous,f.potassium);
+     }
     private void addShadowedBox(HBox hb) {
 
         DropShadow e = new DropShadow();

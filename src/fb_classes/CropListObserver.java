@@ -28,6 +28,8 @@ import java.util.LinkedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Line;
@@ -50,6 +52,7 @@ public class CropListObserver {
     private Global gbGlobal = Global.getGlobal();
     private AnchorPane anchorPane = null;
     private FertilizerListObserver fertilizerListObserver = null;
+    private List<Fertilizer> fertilizers = null;
 
     public void setFertilizerObserverList(FertilizerListObserver flo) {
         this.fertilizerListObserver = flo;
@@ -337,27 +340,38 @@ public class CropListObserver {
         JFXTextField ctemperature = new JFXTextField(String.valueOf(cr.Temperature));
         ctemperature.setPromptText("Enter price of fertilizer");
         JFXTextArea fdescripition = new JFXTextArea(cr.Description);
-
+        fdescripition.setPromptText("Description");
         String soi = "";
         for (String s : cr.Soils) {
             soi += s + ",";
         }
         JFXTextArea soils = new JFXTextArea(soi);
+        soils.setPromptText("Enter Soils Sepparated By Comma");
 
         String reg = "";
         for (String r : cr.Regions) {
             reg += r + ",";
         }
         JFXTextArea regions = new JFXTextArea(reg);
-
+        regions.setPromptText("Enter Region Separated By Comma");
+        
         //rtemp.getStyleClass().add("paddingForChild");
         setWidthForTextArea(fdescripition);
         setWidthForTextArea(soils);
         setWidthForTextArea(regions);
-        HBox rt = new HBox(crainfall, ctemperature);
+        
+        HBox rt = new HBox(crainfall, ctemperature, cprice);
+        rt.getStyleClass().add("paddingForChild");
         HBox dsf = new HBox(fdescripition, soils, regions);
         dsf.getStyleClass().add("paddingForChild");
-        vb1.getChildren().addAll(cname, ctype, rt, dsf);
+        ListView<CheckBox> lfertilizers = new ListView<>();
+        lfertilizers.setPrefHeight(200);
+        lfertilizers.setMinHeight(200);
+        fertilizers = fertilizerListObserver.getFList();
+        addFertilizerToList(lfertilizers, cr);
+
+        //System.out.println(fertilizers.size());
+        vb1.getChildren().addAll(cname, ctype, rt, dsf, lfertilizers);
         an1.getChildren().addAll(vb1);
         content.setBody(an1);
 
@@ -365,34 +379,41 @@ public class CropListObserver {
         JFXButton updateBtn = new JFXButton("Update");
         JFXButton closeBtn = new JFXButton("Close");
         updateBtn.setOnAction((ActionEvent event) -> {
-            gbGlobal.showMessage("Updating Fertilizer");
-
+            gbGlobal.showMessage("Updating Crop");
             try {
-                //Fertilizer ftemp = new Fertilizer();
-                /* if(isValidNumber(nnitr))
-                    .Nitrogen = Integer.valueOf(nnitr.getText());
-                else
-                {
-                    gbGlobal.showMessage("Enter Valid Value for Nitrogen");
-                    return;
-                }
-                
-/*
+
+                cr.CropName = cname.getText();
+                cr.CropType = ctype.getText();
+                cr.Description = fdescripition.getText();
+                cr.Rainfall = Integer.valueOf(crainfall.getText());
+                cr.Regions = regions.getText().split(",");
+                cr.Soils = soils.getText().split(",");
+                cr.Temperature = Integer.valueOf(ctemperature.getText());
+                cr.cropPrice.price = Double.valueOf(cprice.getText());
+                cr.cropPrice.date = new Date();
                 Session sess = dbCon.getSession();
                 Transaction tr = sess.beginTransaction();
-                sess.saveOrUpdate(fert);
-                sess.saveOrUpdate(fert.fertilizerPrice);
+                List<Fertilizer> lflist = getSelectedFertilizers(lfertilizers, sess, cr);
+                if (lflist == null) {
+                    gbGlobal.showMessage("Couldn't Update Crop.Please Try Later");
+                    return;
+                }
+                cr.fertilizers.clear();
+                cr.fertilizers = lflist;
+                sess.saveOrUpdate(cr);
+                sess.saveOrUpdate(cr.cropPrice);
                 tr.commit();
                 dbCon.closeSession();
                 dialog.close();
-                gbGlobal.showMessage("Fertilizer Updated");
+                gbGlobal.showMessage("Updated Crop Successfully.");
                 updateCrop();
-                 */            } catch (Exception e) {
+            } catch (Exception e) {
                 gbGlobal.showMessage("Couldn't update fertilizer. Please try again later.");
                 System.err.println(e);
             }
         });
         closeBtn.setOnAction((ActionEvent event) -> {
+            lfertilizers.getItems().clear();
             dialog.close();
         });
 
@@ -404,6 +425,65 @@ public class CropListObserver {
         dialog.show();
     }
 
+    private List<Fertilizer> getSelectedFertilizers(ListView<CheckBox> lfertilizers, Session sess, Crop cr) {
+        List<Fertilizer> flist = new LinkedList<>();
+        sess.createSQLQuery("delete  from  fertilizer_crop where crops_CropId=" + String.valueOf(cr.CropId)).executeUpdate();
+        try {
+            cr.getFertilizers().forEach((f) -> {
+                Fertilizer ftemp = (Fertilizer) sess.get(Fertilizer.class, f.getFertilizerId());
+                ftemp.getCrops().remove(cr);
+                //sess.saveOrUpdate(f);
+            });
+            cr.fertilizers.clear();
+
+            lfertilizers.getItems().stream().filter((chk) -> (chk.isSelected())).map((chk) -> (Fertilizer) sess.get(Fertilizer.class, Integer.valueOf(chk.getId().replaceAll("fertilizer", "")))).map((ftemp) -> {
+                ftemp.getCrops().add(cr);
+                return ftemp;
+            }).forEachOrdered((ftemp) -> {
+                flist.add(ftemp);
+            });
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+        return flist;
+    }
+
+    private void addFertilizerToList(ListView<CheckBox> lfertilizers, Crop cr) {
+        //System.err.println("I was called");
+        if (fertilizers == null) {
+            return;
+        }
+        //System.err.println("I was 2 called");
+        if (lfertilizers == null) {
+            return;
+        }
+        //System.err.println("I was 3 called");
+        lfertilizers.getItems().clear();
+
+        fertilizers.stream().map((f) -> {
+            CheckBox chkTemp = new CheckBox(getFertilizerString(f));
+            //System.out.println(isSelected(cr, f));
+            chkTemp.setSelected(isSelected(cr, f));
+            chkTemp.setId("fertilizer" + String.valueOf(f.fertilizerId));
+            return chkTemp;
+        }).forEachOrdered((chkTemp) -> {
+            //System.err.println("");
+            lfertilizers.getItems().add(chkTemp);
+        });
+    }
+
+    private boolean isSelected(Crop cr, Fertilizer f) {
+        //f.getCrops().clear();
+        if (cr.getFertilizers().stream().anyMatch((fert) -> (fert.getFertilizerId() == f.getFertilizerId()))) {
+            return true;
+        }
+        return false;
+    }
+    private String getFertilizerString(Fertilizer f)
+    {
+         return String.format("%s \tRatio(N: %d  P: %d  K: %d  ) ", f.fname,f.Nitrogen,f.phosphorous,f.potassium);
+     }
     private DropShadow getDropShadow() {
         DropShadow e = new DropShadow();
         e.setWidth(10);
