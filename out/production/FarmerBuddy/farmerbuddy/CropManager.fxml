@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane id="AnchorPane" fx:id="CropAnchorPaneM" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #AED6F1;" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="farmerbuddy.CropManagerController">
+    <stylesheets>
+        <URL value="@/StyleSheet/cropmanager.css" />
+    </stylesheets>
+   <children>
+      <ScrollPane layoutX="14.0" layoutY="14.0" prefHeight="578.0" prefWidth="878.0">
+         <content>
+            <VBox fx:id="vboxCropManager" prefHeight="572.0" prefWidth="870.0" style="-fx-background-color: #AED6F1;" />
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

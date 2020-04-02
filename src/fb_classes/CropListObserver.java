@@ -233,6 +233,7 @@ public class CropListObserver {
             gbGlobal.showMessage("Cannot view this crop");
             return;
         }
+        gbGlobal.setIncFalg(true);
         JFXDialogLayout content = new JFXDialogLayout();
         content.getStyleClass().add("bgCrop");
         StackPane stackPane = new StackPane();
@@ -266,11 +267,11 @@ public class CropListObserver {
             regions.getChildren().add(new Text(r));
         }
 
-        VBox fertilizers = new VBox();
+        VBox fertilizersVBox = new VBox();
         if (cr.getFertilizers().isEmpty()) {
-            fertilizers.getChildren().add(bText("No fertilizers currently available for this crop"));
+            fertilizersVBox.getChildren().add(bText("No fertilizers currently available for this crop"));
         } else {
-            fertilizers.getChildren().add(bText("List of fertilizers: Ratio(N,P,K)"));
+            fertilizersVBox.getChildren().add(bText("List of fertilizers: Ratio(N,P,K)"));
         }
         cr.getFertilizers().stream().map((f) -> {
             HBox htemp = new HBox();
@@ -279,14 +280,15 @@ public class CropListObserver {
             htemp.getChildren().addAll(bText("\t " + String.valueOf(f.Nitrogen) + "% " + String.valueOf(f.phosphorous) + "% " + String.valueOf(f.potassium) + "% "));
             return htemp;
         }).forEachOrdered((htemp) -> {
-            fertilizers.getChildren().add(htemp);
+            fertilizersVBox.getChildren().add(htemp);
         });
-        panes.getChildren().addAll(soils, regions, fertilizers);
+        panes.getChildren().addAll(soils, regions, fertilizersVBox);
 
         v1.getChildren().add(panes);
         hb.getChildren().add(v1);
         hb.setLayoutY(50);
         an1.getChildren().add(hb);
+        gbGlobal.setFadeInDownAnimation(an1);
         content.setBody(an1);
 
         JFXDialog dialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
@@ -327,25 +329,34 @@ public class CropListObserver {
         an1.setMinSize(825, 400);
 
         VBox vb1 = new VBox();
-
+        vb1.getStyleClass().add("paddingForChild");
         JFXTextField cname = new JFXTextField(cr.CropName);
+        cname.setLabelFloat(true);
         cname.setPromptText("Name of Crop");
         JFXTextField ctype = new JFXTextField(cr.CropType);
+        ctype.setLabelFloat(true);
         ctype.setPromptText("Type of Crop");
 
+        HBox name_type = new HBox(cname,ctype);
+        name_type.getStyleClass().add("paddingForChild");
         JFXTextField crainfall = new JFXTextField(String.valueOf(cr.Rainfall));
+        crainfall.setLabelFloat(true);
         crainfall.setPromptText("Content of Nitrogen in %");
         JFXTextField cprice = new JFXTextField(String.valueOf(cr.getCropPrice().price));
+        cprice.setLabelFloat(true);
         cprice.setPromptText("Enter price of fertilizer");
         JFXTextField ctemperature = new JFXTextField(String.valueOf(cr.Temperature));
+        ctemperature.setLabelFloat(true);
         ctemperature.setPromptText("Enter price of fertilizer");
         JFXTextArea fdescripition = new JFXTextArea(cr.Description);
+        fdescripition.setLabelFloat(true);
         fdescripition.setPromptText("Description");
         String soi = "";
         for (String s : cr.Soils) {
             soi += s + ",";
         }
         JFXTextArea soils = new JFXTextArea(soi);
+        soils.setLabelFloat(true);
         soils.setPromptText("Enter Soils Sepparated By Comma");
 
         String reg = "";
@@ -353,6 +364,7 @@ public class CropListObserver {
             reg += r + ",";
         }
         JFXTextArea regions = new JFXTextArea(reg);
+        regions.setLabelFloat(true);
         regions.setPromptText("Enter Region Separated By Comma");
         
         //rtemp.getStyleClass().add("paddingForChild");
@@ -365,13 +377,13 @@ public class CropListObserver {
         HBox dsf = new HBox(fdescripition, soils, regions);
         dsf.getStyleClass().add("paddingForChild");
         ListView<CheckBox> lfertilizers = new ListView<>();
-        lfertilizers.setPrefHeight(200);
-        lfertilizers.setMinHeight(200);
+        lfertilizers.setPrefHeight(150);
+        lfertilizers.setMinHeight(150);
         fertilizers = fertilizerListObserver.getFList();
         addFertilizerToList(lfertilizers, cr);
 
         //System.out.println(fertilizers.size());
-        vb1.getChildren().addAll(cname, ctype, rt, dsf, lfertilizers);
+        vb1.getChildren().addAll(name_type, rt, dsf, lfertilizers);
         an1.getChildren().addAll(vb1);
         content.setBody(an1);
 

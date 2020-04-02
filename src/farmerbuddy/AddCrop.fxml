@@ -8,14 +8,14 @@
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="586.0" prefWidth="900.0" style="-fx-background-color: #AED6F1;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="farmerbuddy.AddCropController">
    <children>
-      <JFXTextField fx:id="crop_name" alignment="CENTER" layoutX="325.0" layoutY="52.0" prefHeight="26.0" prefWidth="256.0" promptText="Crop Name" />
-      <JFXTextField fx:id="crop_type" alignment="CENTER" layoutX="152.0" layoutY="100.0" prefHeight="26.0" prefWidth="283.0" promptText="Crop Type" />
-      <JFXTextArea fx:id="soils" layoutX="156.0" layoutY="148.0" prefHeight="103.0" prefWidth="283.0" promptText="Enter Soil Splitted By Comma ( , )" />
-      <JFXTextArea fx:id="regions" layoutX="457.0" layoutY="148.0" prefHeight="103.0" prefWidth="283.0" promptText="Enter Regions Splitted By Comma( , )" />
-      <JFXTextField fx:id="crop_rainfall" alignment="CENTER" layoutX="154.0" layoutY="281.0" prefHeight="26.0" prefWidth="283.0" promptText="Enter Rainfall in Inches " />
-      <JFXTextField fx:id="crop_temperature" alignment="CENTER" layoutX="462.0" layoutY="282.0" prefHeight="26.0" prefWidth="283.0" promptText="Enter Temperature In Celcius" />
-      <JFXTextArea fx:id="crop_description" layoutX="154.0" layoutY="328.0" prefHeight="26.0" prefWidth="592.0" promptText="Description" />
-      <JFXTextField fx:id="crop_price" layoutX="453.0" layoutY="100.0" prefHeight="26.0" prefWidth="283.0" promptText="Crop Price" />
+      <JFXTextField fx:id="crop_name" alignment="CENTER" labelFloat="true" layoutX="325.0" layoutY="52.0" prefHeight="26.0" prefWidth="256.0" promptText="Crop Name" />
+      <JFXTextField fx:id="crop_type" alignment="CENTER" labelFloat="true" layoutX="152.0" layoutY="100.0" prefHeight="26.0" prefWidth="283.0" promptText="Crop Type" />
+      <JFXTextArea fx:id="soils" labelFloat="true" layoutX="156.0" layoutY="148.0" prefHeight="103.0" prefWidth="283.0" promptText="Enter Soil Splitted By Comma ( , )" />
+      <JFXTextArea fx:id="regions" labelFloat="true" layoutX="457.0" layoutY="148.0" prefHeight="103.0" prefWidth="283.0" promptText="Enter Regions Splitted By Comma( , )" />
+      <JFXTextField fx:id="crop_rainfall" alignment="CENTER" labelFloat="true" layoutX="154.0" layoutY="281.0" prefHeight="26.0" prefWidth="283.0" promptText="Enter Rainfall in Inches " />
+      <JFXTextField fx:id="crop_temperature" alignment="CENTER" labelFloat="true" layoutX="462.0" layoutY="282.0" prefHeight="26.0" prefWidth="283.0" promptText="Enter Temperature In Celcius" />
+      <JFXTextArea fx:id="crop_description" labelFloat="true" layoutX="154.0" layoutY="328.0" prefHeight="26.0" prefWidth="592.0" promptText="Description" />
+      <JFXTextField fx:id="crop_price" labelFloat="true" layoutX="453.0" layoutY="100.0" prefHeight="26.0" prefWidth="283.0" promptText="Crop Price" />
       <JFXButton buttonType="RAISED" layoutX="581.0" layoutY="440.0" onAction="#addCrop" prefHeight="26.0" prefWidth="166.0" ripplerFill="#20a0c7" style="-fx-background-color: #0ec1af;" text="Add Crop" />
       <JFXListView fx:id="lfertilizers" layoutX="152.0" layoutY="395.0" prefHeight="149.0" prefWidth="415.0" />
    </children>

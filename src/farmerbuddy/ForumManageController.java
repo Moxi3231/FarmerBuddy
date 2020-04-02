@@ -12,6 +12,7 @@ import fb_classes.Question;
 import fb_classes.User;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -56,9 +57,12 @@ public class ForumManageController implements Initializable
     //private JFXToggleButton toogleBtn;
     @FXML
     private JFXButton detailsBtn;
-
+    private List<Question> questions = null;
+    private List<Label> qLabel = new LinkedList<>();
     @FXML
     private JFXButton addBtn;
+    @FXML
+    private JFXTextField searchBar;
 
     @Override
     public void initialize(URL url, ResourceBundle rb)
@@ -71,10 +75,11 @@ public class ForumManageController implements Initializable
         try
         {
             int len = listView.getItems().size();
+            qLabel.clear();
             listView.getItems().remove(0, len);
             Session sess = dbCon.getSession();
             //Transaction tr=  sess.beginTransaction();
-            List<Question> questions = sess.createQuery("select q from Question q").list();
+            questions = sess.createQuery("select q from Question q").list();
             sess.close();
             questions.stream().map((q) -> {
                 //JFXListCell<Text> ct = new JFXListCell<>();
@@ -85,6 +90,7 @@ public class ForumManageController implements Initializable
                 return l;
             }).forEachOrdered((l) -> {
                 //l.setStyle("-fx-padding: 1;");
+                qLabel.add(l);
                 listView.getItems().add(l);
             });
 
@@ -93,7 +99,31 @@ public class ForumManageController implements Initializable
             System.out.println(e);
         }
     }
-
+    @FXML
+    public void filterQuestion()
+    {
+        
+        String sQuery = searchBar.getText();
+        
+        if(sQuery==null || "".equals(sQuery))
+        {
+            listView.getItems().clear();
+            gb.setIncFalg(true);
+             qLabel.forEach((l) -> {
+                 gb.setFadeInDownAnimation(l);
+            listView.getItems().add(l);
+        });
+            return;
+        }
+        listView.getItems().clear();
+       
+        gb.showMessage("Loading Question Containing: "+"\""+searchBar.getText()+"\"");
+        gb.setIncFalg(true);
+        qLabel.stream().filter((q) -> (q.getText().toLowerCase().contains(sQuery.toLowerCase()))).forEachOrdered((q) -> {
+            gb.setFadeInDownAnimation(q);
+            listView.getItems().add(q);
+        });
+    }
     public void loadQuestionByCategory(String cat)
     {
     }
@@ -236,6 +266,7 @@ public class ForumManageController implements Initializable
 
         AnchorPane an1 = new AnchorPane();
         an1.setPrefWidth(600);
+        
 
         JFXTextArea textArea1 = new JFXTextArea();
         //tf.autosize();
@@ -243,7 +274,13 @@ public class ForumManageController implements Initializable
         textArea1.setPrefWidth(550.0);
 
         textArea1.setPromptText("Enter Your Question Here");
-        an1.getChildren().add(textArea1);
+        textArea1.setLabelFloat(true);
+        
+        //JFXTextField tf = new JFXTextField();
+        
+        HBox h1 = new HBox();
+        h1.getChildren().add(textArea1);
+        an1.getChildren().add(h1);
         content.setBody(an1);
 
         JFXDialog dialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
@@ -279,7 +316,12 @@ public class ForumManageController implements Initializable
 
                     Question q = new Question();
                     q.question = question;
-                    q.user = (User) sess.get(User.class, 3);
+                    if(gb.getUser()==null)
+                    {
+                        gb.showMessage("Please Login To Add Question!!");
+                        return;
+                    }
+                    q.user = (User) sess.get(User.class, gb.getUser().getUserId());
 
                     sess.save(q);
 

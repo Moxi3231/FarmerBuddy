@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="farmerbuddy.RegistrationController">
+   <children>
+      <Pane layoutX="5.0" layoutY="8.0" styleClass="loginPane" stylesheets="@../StyleSheet/Style.css" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="8.0">
+         <children>
+            <Pane layoutX="229.0" layoutY="20.0" prefHeight="546.0" prefWidth="434.0" styleClass="raisedPaneWhite" stylesheets="@../StyleSheet/Style.css">
+               <children>
+                  <JFXButton buttonType="RAISED" layoutX="44.0" layoutY="501.0" onMouseClicked="#onBackTOLoginClick" prefHeight="25.0" prefWidth="342.0" ripplerFill="#00ccff" style="-fx-background-color: #e8f4f8;" text="Back To Login" textFill="WHITE" />
+                  <Label layoutX="91.0" layoutY="20.0" text="Registration Form" textFill="#e5e4e4">
+                     <font>
+                        <Font name="Calibri Italic" size="34.0" />
+                     </font>
+                  </Label>
+                  <JFXTextField fx:id="name" layoutX="44.0" layoutY="111.0" prefHeight="25.0" prefWidth="342.0" promptText="Name" />
+                  <JFXTextField fx:id="email" layoutX="44.0" layoutY="181.0" prefHeight="25.0" prefWidth="342.0" promptText="Email" />
+                  <JFXTextField fx:id="mobilenumber" layoutX="44.0" layoutY="313.0" prefHeight="25.0" prefWidth="342.0" promptText="MobileNumber" />
+                  <JFXTextField fx:id="region" focusColor="#f1f4fa" labelFloat="true" layoutX="44.0" layoutY="373.0" prefHeight="25.0" prefWidth="89.0" promptText="Region" />
+                  <JFXButton buttonType="RAISED" layoutX="48.0" layoutY="429.0" onMouseClicked="#Register" prefHeight="25.0" prefWidth="342.0" ripplerFill="#e28181" style="-fx-background-color: #00ff80;" text="Register" textFill="#edebeb">
+                     <font>
+                        <Font name="FontAwesome Regular" size="12.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXTextField fx:id="district" layoutX="170.0" layoutY="373.0" prefHeight="25.0" prefWidth="89.0" promptText="District" />
+                  <JFXTextField fx:id="state" layoutX="290.0" layoutY="373.0" prefHeight="25.0" prefWidth="100.0" promptText="State" />
+                  <JFXPasswordField fx:id="password" layoutX="47.0" layoutY="252.0" prefHeight="25.0" prefWidth="342.0" promptText="Password" />
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+     
+   </children>
+</AnchorPane>

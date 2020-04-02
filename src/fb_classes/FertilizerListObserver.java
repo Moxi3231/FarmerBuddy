@@ -54,6 +54,7 @@ public class FertilizerListObserver {
     private CropListObserver cropListObserver = null;
 
     public void updateFertilizers() {
+        
         fillFertilizerList();
         updateFertilizerList();
         updateCheckBox();
@@ -83,15 +84,16 @@ public class FertilizerListObserver {
         if (lfertilizers == null) {
             return;
         }
-
+        gb.setIncFalg(true);
         lfertilizers.getItems().clear();
-
         fertilizers.stream().map((f) -> {
             CheckBox chkTemp = new CheckBox(getFertilizerString(f));
             chkTemp.setId("fertilizer" + String.valueOf(f.fertilizerId));
             return chkTemp;
         }).forEachOrdered((chkTemp) -> {
+            gb.setFadeInDownAnimation(chkTemp);
             lfertilizers.getItems().add(chkTemp);
+            
         });
     }
 
@@ -119,6 +121,7 @@ public class FertilizerListObserver {
             return;
         }
         verticalBox.getChildren().clear();
+        gb.setIncFalg(true);
         fertilizers.stream().map((ftemp) -> {
             HBox h1 = new HBox();
             h1.setMinSize(850, 200);
@@ -162,7 +165,7 @@ public class FertilizerListObserver {
                 v1.setStyle("-fx-background-color:#C2FEDA;");
 
                 JFXButton update = new JFXButton("Update");
-
+                
                 JFXButton del = new JFXButton("Delete");
 
                 del.setButtonType(JFXButton.ButtonType.RAISED);
@@ -206,6 +209,7 @@ public class FertilizerListObserver {
             addShadowedBox(h1);
             return h1;
         }).forEachOrdered((h1) -> {
+            gb.setFadeInDownAnimation(h1);
             verticalBox.getChildren().add(h1);
         });
     }
@@ -229,7 +233,7 @@ public class FertilizerListObserver {
             return;
         }
         if (fert == null) {
-            gb.showMessage("Cannot view this fertilizer");
+            gb.showMessage("Cannot Update this fertilizer");
             return;
         }
         JFXDialogLayout content = new JFXDialogLayout();
@@ -246,31 +250,42 @@ public class FertilizerListObserver {
         an1.setMinSize(825, 400);
 
         VBox vb1 = new VBox();
-
+        vb1.setAlignment(Pos.CENTER);
+        vb1.setPrefHeight(300);
+        vb1.setMinHeight(200);
+        vb1.getStyleClass().add("paddingForChild");
         JFXTextField fname = new JFXTextField(fert.fname);
+        fname.setLabelFloat(true);
         fname.setPromptText("Name of fertilizer");
         JFXTextField ph = new JFXTextField(String.valueOf(fert.phosphorous));
+        ph.setLabelFloat(true);
         ph.setPromptText("Content of Phosphorous in %");
         JFXTextField pots = new JFXTextField(String.valueOf(fert.phosphorous));
+        pots.setLabelFloat(true);
         ph.setPromptText("Content of Potassium in %");
         JFXTextField nnitr = new JFXTextField(String.valueOf(fert.Nitrogen));
+        nnitr.setLabelFloat(true);
         nnitr.setPromptText("Content of Nitrogen in %");
         JFXTextField fprice = new JFXTextField(String.valueOf(fert.getFertilizerPrice().price));
+        fprice.setLabelFloat(true);
         fprice.setPromptText("Enter price of fertilizer");
 
         JFXTextArea fdescripition = new JFXTextArea(fert.fDescription);
+        fdescripition.setLabelFloat(true);
         fdescripition.setPromptText("Description");
         String soi = "";
         for (String s : fert.Soils) {
             soi += s + ",";
         }
         JFXTextArea soils = new JFXTextArea(soi);
+        soils.setLabelFloat(true);
         soils.setPromptText("Enter Soils Sepparated By Comma");
         String reg = "";
         for (String r : fert.Regions) {
             reg += r + ",";
         }
         JFXTextArea regions = new JFXTextArea(reg);
+        regions.setLabelFloat(true);
         regions.setPromptText("Enter Region Separated By Comma");
         HBox rtemp = new HBox(ph, pots, nnitr);
         vb1.getChildren().addAll(new HBox(fname), rtemp, new HBox(fprice));

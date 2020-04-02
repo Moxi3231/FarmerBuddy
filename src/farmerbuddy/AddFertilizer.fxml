@@ -7,14 +7,14 @@
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="577.0" prefWidth="900.0" style="-fx-background-color: #AED6F1;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="farmerbuddy.AddFertilizerController">
    <children>
-      <JFXTextField fx:id="fertilizer_name" alignment="CENTER" layoutX="326.0" layoutY="41.0" prefHeight="26.0" prefWidth="247.0" promptText="Fertilizer Name" />
-      <JFXTextField fx:id="fertilizer_P" layoutX="326.0" layoutY="113.0" prefHeight="26.0" prefWidth="247.0" promptText="\% of Phosphorous" />
-      <JFXTextField fx:id="fertilizer_N" layoutX="326.0" layoutY="183.0" prefHeight="26.0" prefWidth="247.0" promptText="\% of Nitrogen" />
-      <JFXTextField fx:id="fertilizer_Potassium" layoutX="326.0" layoutY="252.0" prefHeight="26.0" prefWidth="247.0" promptText="\% of Potassium" />
-      <JFXTextArea fx:id="fertilizer_desc" layoutX="29.0" layoutY="374.0" prefHeight="104.0" prefWidth="247.0" promptText="Enter Description" />
-      <JFXTextArea fx:id="fertilizer_soils" layoutX="325.0" layoutY="373.0" prefHeight="104.0" prefWidth="247.0" promptText="Enter Soil Splitted By Comma( , )" />
-      <JFXTextArea fx:id="fertilizer_regions" layoutX="623.0" layoutY="373.0" prefHeight="104.0" prefWidth="247.0" promptText="Enter Region Splitted by Comma ( , )" />
+      <JFXTextField fx:id="fertilizer_name" alignment="CENTER" labelFloat="true" layoutX="326.0" layoutY="41.0" prefHeight="26.0" prefWidth="247.0" promptText="Fertilizer Name" />
+      <JFXTextField fx:id="fertilizer_P" labelFloat="true" layoutX="326.0" layoutY="113.0" prefHeight="26.0" prefWidth="247.0" promptText="\% of Phosphorous" />
+      <JFXTextField fx:id="fertilizer_N" labelFloat="true" layoutX="326.0" layoutY="183.0" prefHeight="26.0" prefWidth="247.0" promptText="\% of Nitrogen" />
+      <JFXTextField fx:id="fertilizer_Potassium" labelFloat="true" layoutX="326.0" layoutY="252.0" prefHeight="26.0" prefWidth="247.0" promptText="\% of Potassium" />
+      <JFXTextArea fx:id="fertilizer_desc" labelFloat="true" layoutX="29.0" layoutY="374.0" prefHeight="104.0" prefWidth="247.0" promptText="Enter Description" />
+      <JFXTextArea fx:id="fertilizer_soils" labelFloat="true" layoutX="325.0" layoutY="373.0" prefHeight="104.0" prefWidth="247.0" promptText="Enter Soil Splitted By Comma( , )" />
+      <JFXTextArea fx:id="fertilizer_regions" labelFloat="true" layoutX="623.0" layoutY="373.0" prefHeight="104.0" prefWidth="247.0" promptText="Enter Region Splitted by Comma ( , )" />
       <JFXButton fx:id="addFertBtn" buttonType="RAISED" layoutX="325.0" layoutY="506.0" onMouseClicked="#addFertilizer" prefHeight="34.0" prefWidth="247.0" ripplerFill="#18b5ca" style="-fx-background-color: #70f6c5;" text="Add Fertilizer" />
-      <JFXTextField fx:id="fertilizer_price" layoutX="325.0" layoutY="307.0" prefHeight="26.0" prefWidth="247.0" promptText="Fertilizer Price" />
+      <JFXTextField fx:id="fertilizer_price" labelFloat="true" layoutX="325.0" layoutY="307.0" prefHeight="26.0" prefWidth="247.0" promptText="Fertilizer Price" />
    </children>
 </AnchorPane>

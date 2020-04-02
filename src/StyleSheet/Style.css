@@ -7,6 +7,7 @@ and open the template in the editor.
     Created on : Mar 3, 2020, 8:12:51 PM
     Author     : moxanmoxank
 */
+
 .bgCrop{
     -fx-background-image: url(Crop.jpg);
     -fx-opacity: 0.9;

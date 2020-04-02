@@ -14,8 +14,8 @@
          </effect></JFXListView>
       <JFXButton fx:id="detailsBtn" buttonType="RAISED" layoutX="696.0" layoutY="172.0" onMouseClicked="#viewDetailsOnClick" prefHeight="42.0" prefWidth="143.0" ripplerFill="#8274cd" style="-fx-background-color: #7f86ce;" text="Answer" AnchorPane.rightAnchor="60.799999999999955" />
       <JFXButton fx:id="addBtn" buttonType="RAISED" contentDisplay="CENTER" layoutX="696.0" layoutY="67.0" onMouseClicked="#addQuestion" prefHeight="42.0" prefWidth="143.0" ripplerFill="#4bd2bd" style="-fx-background-color: #A569BD;" text="Add Question" AnchorPane.bottomAnchor="490.6" AnchorPane.leftAnchor="696.0" AnchorPane.rightAnchor="60.799999999999955" AnchorPane.topAnchor="67.0" />
-      <JFXButton buttonType="RAISED" layoutX="673.0" layoutY="502.0" prefHeight="42.0" prefWidth="207.0" ripplerFill="#8d80cd" style="-fx-background-color: #7D3C98;" text="Search" />
+      <JFXButton buttonType="RAISED" layoutX="673.0" layoutY="502.0" onAction="#filterQuestion" prefHeight="42.0" prefWidth="207.0" ripplerFill="#8d80cd" style="-fx-background-color: #7D3C98;" text="Search" />
       <JFXButton buttonType="RAISED" layoutX="696.0" layoutY="279.0" onMouseClicked="#expandQuestion" prefHeight="42.0" prefWidth="143.0" ripplerFill="#8a7fc2" style="-fx-background-color: #A569BD;" text="Expand Question" />
-      <JFXTextField focusColor="WHITE" layoutX="673.0" layoutY="401.0" prefHeight="42.0" prefWidth="207.0" promptText="Category/Question" unFocusColor="#202121" />
+      <JFXTextField fx:id="searchBar" focusColor="WHITE" labelFloat="true" layoutX="673.0" layoutY="401.0" prefHeight="42.0" prefWidth="207.0" promptText="Category/Question" unFocusColor="#202121" />
    </children>
 </AnchorPane>
