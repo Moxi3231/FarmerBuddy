@@ -128,8 +128,8 @@ public class CropListObserver {
 
             v1.setBackground(new Background(new BackgroundFill(Color.DARKSLATEGRAY, CornerRadii.EMPTY, new Insets(10))));
             v2.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, new Insets(10))));
-            v2.setStyle("-fx-background-color:#C2FEDA;");
-            v1.setStyle("-fx-background-color:#C2FEDA;");
+            v2.setStyle("-fx-background-color:#9ED9CCFF;");
+            v1.setStyle("-fx-background-color:#9ED9CCFF;");
 
             JFXButton update = new JFXButton("Update");
             JFXButton del = new JFXButton("Delete");

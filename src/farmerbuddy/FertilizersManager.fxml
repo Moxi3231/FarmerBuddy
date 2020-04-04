@@ -8,7 +8,7 @@
    <children>
       <ScrollPane layoutY="19.0" prefHeight="567.0" prefWidth="892.0">
          <content>
-            <VBox fx:id="vboxFertilizersManager" prefHeight="564.0" prefWidth="896.0" style="-fx-background-color: #AED6F1;" />
+            <VBox fx:id="vboxFertilizersManager" prefHeight="564.0" prefWidth="896.0" style="-fx-background-color: #8BBEE8FF;" />
          </content>
       </ScrollPane>
    </children>
