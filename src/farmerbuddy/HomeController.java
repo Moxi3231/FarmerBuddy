@@ -7,6 +7,7 @@ package farmerbuddy;
 
 import com.jfoenix.controls.JFXTabPane;
 import com.jfoenix.controls.JFXTextArea;
+import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -18,6 +19,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
 import fb_classes.*;
+
 /**
  * FXML Controller class
  *
@@ -44,34 +46,49 @@ public class HomeController implements Initializable {
     private AnchorPane addCropAnchorPane;
     @FXML
     private AnchorPane addFertilizerAnchorPane;
+    @FXML
+    private JFXTextField username;
+    @FXML
+    private Tab croptab;
+    @FXML
+    private Tab fertilizertab;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        gb.getDictionary().put("fertilizerListObserver",new FertilizerListObserver());
+        gb.getDictionary().put("fertilizerListObserver", new FertilizerListObserver());
         gb.getDictionary().put("cropListObserver", new CropListObserver());
-        addPane(FertilizerAnchorPane,"FertilizersManager.fxml");
-        addPane(ForumAnchorPane,"ForumManage.fxml");
-        addPane(CropsAnchorPane,"CropManager.fxml");
+                
+            
+        addPane(ForumAnchorPane, "ForumManage.fxml");
+        addPane(FertilizerAnchorPane, "FertilizersManager.fxml");
+        addPane(CropsAnchorPane, "CropManager.fxml");
+         if (gb.getUser() != null) {
+                    username.setText(gb.getUser().getUserName());
+            }
         if (gb.getUser() == null || !gb.isUserAdmin()) {
             mainTab.getTabs().remove(addCrop);
             mainTab.getTabs().remove(addFertilizer);
+           
+            if(gb.getUser()==null)
+            {
+                mainTab.getTabs().remove(fertilizertab);
+                mainTab.getTabs().remove(croptab);
+            }
         } else {
-            
+
             //changeToAddFertilizer();
             addPane(addFertilizerAnchorPane, "AddFertilizer.fxml");
             //changeToAddCrop();
-            addPane(addCropAnchorPane,"AddCrop.fxml");
+            addPane(addCropAnchorPane, "AddCrop.fxml");
         }
-        
-        
-     
+
     }
-    public void addPane(AnchorPane pane,String s)
-    {
-          try {
+
+    public void addPane(AnchorPane pane, String s) {
+        try {
             // TODO
             AnchorPane root = FXMLLoader.load(getClass().getResource(s));
             pane.getChildren().setAll(root);

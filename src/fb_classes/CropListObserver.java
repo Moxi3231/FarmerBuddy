@@ -118,6 +118,9 @@ public class CropListObserver {
             innerPane.setPrefSize(600, 150);
             innerPane.setMinSize(600, 150);
             VBox innerVBox = new VBox(l, cropDeccription, l1);
+            VBox.setMargin(l1, new Insets(100));
+            l1.setStyle("-fx-background-color:white;");
+            l1.setEffect(getDropShadow());
             innerVBox.setAlignment(Pos.CENTER);
             innerPane.setStyle("-fx-padding:10;");
 

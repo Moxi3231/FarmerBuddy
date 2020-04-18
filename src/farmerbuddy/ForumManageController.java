@@ -174,10 +174,13 @@ public class ForumManageController implements Initializable
             List<Answer> answers = q.getAnswers();
             
             Label temp1=new Label("Answers"),temp2=new Label("IsValid");
+            HBox t1Cover = new HBox(temp1);
+            t1Cover.setPrefWidth(600);
+            
             temp1.setStyle("-fx-padding:10;");
             temp2.setStyle("-fx-padding:10;");
             
-            HBox hbtemp = new HBox(temp1,temp2);
+            HBox hbtemp = new HBox(t1Cover,temp2);
             
             innerList.getItems().add(hbtemp);
             
@@ -209,7 +212,9 @@ public class ForumManageController implements Initializable
                 }
                 //tbtn.setMaxHeight(5.0);
                 HBox hb = new HBox();
-                hb.getChildren().addAll(label1,tbtn);
+                HBox iCovert1 = new HBox(label1);
+                iCovert1.setPrefWidth(600);
+                hb.getChildren().addAll(iCovert1,tbtn);
                 innerList.getItems().add(hb);
             }
             an.getChildren().addAll(temp,innerList);

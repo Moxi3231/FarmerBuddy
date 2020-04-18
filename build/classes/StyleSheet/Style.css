@@ -46,6 +46,10 @@ and open the template in the editor.
     -fx-background-size: 100%;
 
 }
+.homeBackgroungMain{
+    -fx-background-image: url(../resources/TerraceFarming.jpg);
+    -fx-background-repeat: no-repeat;
+}
 .raisedPaneWhite{
     -fx-background-color: black;
     -fx-opacity: .75;
